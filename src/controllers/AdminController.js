@@ -7,11 +7,3 @@ export const getAdmin = async (req, res) => {
         
     }
 }
-
-export const getOneAdmin = async (req, res) => {
-    try {
-        
-    } catch (error) {
-        
-    }
-}
