@@ -1,28 +1,28 @@
-import StudentModel from "../models/StudentModel.js";
+import ActualRoleModel from "../models/ActualRoleModel.js"
 
-export const getStudent = async (req, res) => {
+export const getActualRole = async (req, res) => {
     try {
-        const students = await StudentModel.findAll()
-        res.json(students)
+        const actual_roles = await ActualRoleModel.findAll()
+        res.json(actual_roles)
     } catch (error) {
         res.json( {message: error.message} )
     }
 }
 
-export const getOneStudent = async (req, res) => {
+export const getOneActualRole = async (req, res) => {
     try {
-        const student = await StudentModel.findAll({
+        const actual_role = await ActualRoleModel.findAll({
             where:{ id:req.params.id }
         })
-        res.json(student[0])
+        res.json(actual_role[0])
     } catch (error) {
         res.json( {message: error.message} )
     }
 }
 
-export const createStudent = async (req, res) => {
+export const createActualRole = async (req, res) => {
     try {
-        await StudentModel.create(req.body)
+        await ActualRoleModel.create(req.body)
         res.json({
             "message":"¡Registro creado correctamente!"
         })
@@ -31,9 +31,9 @@ export const createStudent = async (req, res) => {
      }
 }
 
-export const updateStudent = async (req, res) => {
+export const updateActualRole = async (req, res) => {
     try {
-        await StudentModel.update(req.body, {
+        await ActualRoleModel.update(req.body, {
             where: { id: req.params.id}
         })
         res.json({
@@ -44,9 +44,9 @@ export const updateStudent = async (req, res) => {
     }
 }
 
-export const deleteStudent = async (req, res) => {
+export const deleteActualRole = async (req, res) => {
     try {
-        await StudentModel.destroy({ 
+        await ActualRoleModel.destroy({ 
             where: { id : req.params.id }
         })
         res.json({

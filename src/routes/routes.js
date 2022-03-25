@@ -1,15 +1,77 @@
 import express from "express";
-import { getAdmin } from "../controllers/AdminController.js";
-import { getMentor } from "../controllers/MentorController.js";
-import { getSessions } from "../controllers/SessionsController.js";
-import { getStudent } from "../controllers/StudentController.js";
+import { createActualRole, deleteActualRole, getActualRole, getOneActualRole, updateActualRole } from "../controllers/ActualRoleController.js";
+import { createAdmin, deleteAdmin, getAdmin, getOneAdmin, updateAdmin } from "../controllers/AdminController.js";
+import { createBusiness, deleteBusiness, getBusiness, getOneBusiness, updateBusiness } from "../controllers/BusinessController.js";
+import { createInterests, deleteInterests, getInterests, getOneInterests, updateInterests } from "../controllers/InterestsController.js";
+import { createMentor, deleteMentor, getMentor, getOneMentor, updateMentor } from "../controllers/MentorController.js";
+import { createPrograms, deletePrograms, getOnePrograms, getPrograms, updatePrograms } from "../controllers/ProgramsController.js";
+import { createSessions, deleteSessions, getOneSessions, getSessions, updateSessions } from "../controllers/SessionsController.js";
+import { createStudent, deleteStudent, getOneStudent, getStudent, updateStudent } from "../controllers/StudentController.js";
+import { createStudies, deleteStudies, getOneStudies, getStudies, updateStudies } from "../controllers/StudiesController.js";
+import { createUsers, deleteUsers, getOneUsers, getUsers, updateUsers } from "../controllers/UsersController.js";
 
 const router = express.Router();
 
 router.get('/admin', getAdmin)
+router.get('/admin/:id', getOneAdmin)
+router.post('/admin', createAdmin)
+router.put('/admin/:id', updateAdmin)
+router.delete('/admin/:id', deleteAdmin)
+
 router.get('/mentor', getMentor)
+router.get('/mentor/:id', getOneMentor)
+router.post('/mentor', createMentor)
+router.put('/mentor/:id', updateMentor)
+router.delete('/admin/:id', deleteMentor)
+
 router.get('/sessions', getSessions)
+router.get('/sessions/:id', getOneSessions)
+router.post('/sessions', createSessions)
+router.put('/sessions/:id', updateSessions)
+router.delete('/sessions/:id', deleteSessions)
+
 router.get('/student', getStudent)
+router.get('/student/:id', getOneStudent)
+router.post('/student', createStudent)
+router.put('/student/:id', updateStudent)
+router.delete('/student/:id', deleteStudent)
+
+router.get('/actual-role', getActualRole)
+router.get('/actual-role/:id', getOneActualRole)
+router.post('/actual-role', createActualRole)
+router.put('/actual-role/:id', updateActualRole)
+router.delete('/actual-role/:id', deleteActualRole)
+
+router.get('/business', getBusiness)
+router.get('/business/:id', getOneBusiness)
+router.post('/business', createBusiness)
+router.put('/business/:id', updateBusiness)
+router.delete('/business/:id', deleteBusiness)
+
+router.get('/interests', getInterests)
+router.get('/interests/:id', getOneInterests)
+router.post('/interests', createInterests)
+router.put('/interests/:id', updateInterests)
+router.delete('/interests/:id', deleteInterests)
+
+router.get('/programs', getPrograms)
+router.get('/programs/:id', getOnePrograms)
+router.post('/programs', createPrograms)
+router.put('/programs/:id', updatePrograms)
+router.delete('/programs/:id', deletePrograms)
+
+router.get('/studies', getStudies)
+router.get('/studies/:id', getOneStudies)
+router.post('/studies', createStudies)
+router.put('/studies/:id', updateStudies)
+router.delete('/studies/:id', deleteStudies)
+
+router.get('/users', getUsers)
+router.get('/users/:id', getOneUsers)
+router.post('/users', createUsers)
+router.put('/users/:id', updateUsers)
+router.delete('/users/:id', deleteUsers)
+
 
 export default router
 

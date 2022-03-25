@@ -1,28 +1,28 @@
-import StudentModel from "../models/StudentModel.js";
+import ProgramsModel from "../models/ProgramsModel.js"
 
-export const getStudent = async (req, res) => {
+export const getPrograms = async (req, res) => {
     try {
-        const students = await StudentModel.findAll()
-        res.json(students)
+        const programs = await ProgramsModel.findAll()
+        res.json(programs)
     } catch (error) {
         res.json( {message: error.message} )
     }
 }
 
-export const getOneStudent = async (req, res) => {
+export const getOnePrograms = async (req, res) => {
     try {
-        const student = await StudentModel.findAll({
+        const program = await ProgramsModel.findAll({
             where:{ id:req.params.id }
         })
-        res.json(student[0])
+        res.json(program[0])
     } catch (error) {
         res.json( {message: error.message} )
     }
 }
 
-export const createStudent = async (req, res) => {
+export const createPrograms = async (req, res) => {
     try {
-        await StudentModel.create(req.body)
+        await ProgramsModel.create(req.body)
         res.json({
             "message":"¡Registro creado correctamente!"
         })
@@ -31,9 +31,9 @@ export const createStudent = async (req, res) => {
      }
 }
 
-export const updateStudent = async (req, res) => {
+export const updatePrograms = async (req, res) => {
     try {
-        await StudentModel.update(req.body, {
+        await ProgramsModel.update(req.body, {
             where: { id: req.params.id}
         })
         res.json({
@@ -44,9 +44,9 @@ export const updateStudent = async (req, res) => {
     }
 }
 
-export const deleteStudent = async (req, res) => {
+export const deletePrograms = async (req, res) => {
     try {
-        await StudentModel.destroy({ 
+        await ProgramsModel.destroy({ 
             where: { id : req.params.id }
         })
         res.json({
