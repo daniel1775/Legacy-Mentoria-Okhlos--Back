@@ -9,8 +9,11 @@ import { createSessions, deleteSessions, getOneSessions, getSessions, updateSess
 import { createStudent, deleteStudent, getOneStudent, getStudent, updateStudent } from "../controllers/StudentController.js";
 import { createStudies, deleteStudies, getOneStudies, getStudies, updateStudies } from "../controllers/StudiesController.js";
 import { createUsers, deleteUsers, getOneUsers, getUsers, updateUsers } from "../controllers/UsersController.js";
+import { checkLogin } from "../controllers/LoginController.js";
 
 const router = express.Router();
+
+router.get('/login/:email/:password', checkLogin)
 
 router.get('/admin', getAdmin)
 router.get('/admin/:id', getOneAdmin)
