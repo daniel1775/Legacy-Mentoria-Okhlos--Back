@@ -1,5 +1,4 @@
-import db from "../db/db.js";
-import UsersModel from '../models/UsersModel.js';
+import db from "../db/db.js"
 
 export const checkLogin = async (req, res) => {
 	try {
