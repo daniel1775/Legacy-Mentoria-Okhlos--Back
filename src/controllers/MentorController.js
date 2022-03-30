@@ -6,7 +6,7 @@ export const getMentor = async (req, res) => {
 		const [result, metadata] = await db.query(`
       SELECT mentors.id, mentors.name, mentors.last_name, mentors.birth_date,
         mentors.gender, mentors.phone, users.email, interests.name as interest, programs.name as program,
-        studies.title as studies, business.name as business, actual_roles.name as role, mentors.active
+        studies.title as studies, businesses.name as businesses, actual_roles.name as role, mentors.active
       FROM 
         mentors, 
         mentors_interests,
@@ -15,11 +15,11 @@ export const getMentor = async (req, res) => {
         users, 
         mentors_users,
         sessions, 
-        business, 
+        businesses, 
         studies,
         actual_roles
       WHERE
-        mentors.id_business_fk = business.id and
+        mentors.id_businesses_fk = businesses.id and
         mentors.id_studies_fk = studies.id and
         mentors.id_actual_roles_fk = actual_roles.id and
         mentors.id_programs_fk = programs.id and
@@ -35,6 +35,15 @@ export const getMentor = async (req, res) => {
 	} catch (error) {
 		res.json({ message: error.message });
 	}
+};
+
+export const getAllMentors = async (req, res) => {
+	try {
+        const mentors = await MentorModel.findAll()
+        res.json(mentors)
+    } catch (error) {
+        res.json( {message: error.message} )
+    }
 };
 
 export const getOneMentor = async (req, res) => {

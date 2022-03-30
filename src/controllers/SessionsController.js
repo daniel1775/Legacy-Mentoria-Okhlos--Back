@@ -13,6 +13,15 @@ export const getSessions = async (req, res) => {
 	}
 };
 
+export const getAllSessions = async (req, res) => {
+	try {
+        const sessions = await SessionsModel.findAll()
+        res.json(sessions)
+    } catch (error) {
+        res.json( {message: error.message} )
+    }
+};
+
 export const getOneSessions = async (req, res) => {
 	try {
 		const session = await SessionsModel.findAll({

@@ -3,10 +3,10 @@ import { createActualRole, deleteActualRole, getActualRole, getOneActualRole, up
 import { createAdmin, deleteAdmin, getAdmin, getOneAdmin, updateAdmin } from "../controllers/AdminController.js";
 import { createBusiness, deleteBusiness, getBusiness, getOneBusiness, updateBusiness } from "../controllers/BusinessController.js";
 import { createInterests, deleteInterests, getInterests, getOneInterests, updateInterests } from "../controllers/InterestsController.js";
-import { createMentor, deleteMentor, getMentor, getOneMentor, updateMentor } from "../controllers/MentorController.js";
+import { createMentor, deleteMentor, getAllMentors, getMentor, getOneMentor, updateMentor } from "../controllers/MentorController.js";
 import { createPrograms, deletePrograms, getOnePrograms, getPrograms, updatePrograms } from "../controllers/ProgramsController.js";
-import { createSessions, deleteSessions, getOneSessions, getSessions, updateSessions } from "../controllers/SessionsController.js";
-import { createStudent, deleteStudent, getOneStudent, getStudent, updateStudent } from "../controllers/StudentController.js";
+import { createSessions, deleteSessions, getAllSessions, getOneSessions, getSessions, updateSessions } from "../controllers/SessionsController.js";
+import { createStudent, deleteStudent, getAllStudents, getOneStudent, getStudent, searchStudent, updateStudent } from "../controllers/StudentController.js";
 import { createStudies, deleteStudies, getOneStudies, getStudies, updateStudies } from "../controllers/StudiesController.js";
 import { createUsers, deleteUsers, getOneUsers, getUsers, updateUsers } from "../controllers/UsersController.js";
 import { checkLogin } from "../controllers/LoginController.js";
@@ -21,19 +21,23 @@ router.post('/admin', createAdmin)
 router.put('/admin/:id', updateAdmin)
 router.delete('/admin/:id', deleteAdmin)
 
+router.get('/all-mentors', getAllMentors)
 router.get('/mentors', getMentor)
 router.get('/mentor/:id', getOneMentor)
 router.post('/mentor', createMentor)
 router.put('/mentor/:id', updateMentor)
-router.delete('/admin/:id', deleteMentor)
+router.delete('/mentor/:id', deleteMentor)
 
+router.get('/all-sessions', getAllSessions)
 router.get('/sessions', getSessions)
 router.get('/sessions/:id', getOneSessions)
 router.post('/sessions', createSessions)
 router.put('/sessions/:id', updateSessions)
 router.delete('/sessions/:id', deleteSessions)
 
+router.get('/all-students', getAllStudents)
 router.get('/students', getStudent)
+router.get('/search-students/:name', searchStudent)
 router.get('/student/:id', getOneStudent)
 router.post('/student', createStudent)
 router.put('/student/:id', updateStudent)
@@ -77,4 +81,3 @@ router.delete('/users/:id', deleteUsers)
 
 
 export default router
-

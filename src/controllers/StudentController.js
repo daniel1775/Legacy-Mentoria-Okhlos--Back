@@ -1,9 +1,11 @@
 import StudentModel from '../models/StudentModel.js';
 import db from '../db/db.js';
+import { Sequelize } from "sequelize";
+const op = Sequelize.Op;
 
 export const getStudent = async (req, res) => {
 	try {
-		const [ result, metadata ] = await db.query(`
+		const [result, metadata] = await db.query(`
 			SELECT students.id, students.name, students.last_name, students.birth_date,
 				students.gender, students.phone, users.email, interests.name as interest, programs.name as program,
 				mentors.name as mentor, students.active
@@ -30,6 +32,15 @@ export const getStudent = async (req, res) => {
 		res.json(result)
 	} catch (error) {
 		res.json({ message: error.message });
+	}
+};
+
+export const getAllStudents = async (req, res) => {
+	try {
+		const students = await StudentModel.findAll()
+		res.json(students)
+	} catch (error) {
+		res.json({ message: error.message })
 	}
 };
 
@@ -78,5 +89,15 @@ export const deleteStudent = async (req, res) => {
 		});
 	} catch (error) {
 		res.json({ message: error.message });
+	}
+};
+
+export const searchStudent = async (req, res) => {
+
+	try {
+		const student = await db.query('SELECT * FROM students WHERE name LIKE "%' + req.params.name + '%"')
+		res.json(student);
+	}  catch (error) {
+		res.json({ message: error.message })
 	}
 };
