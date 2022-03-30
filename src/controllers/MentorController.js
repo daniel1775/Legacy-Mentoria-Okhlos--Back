@@ -37,6 +37,27 @@ export const getMentor = async (req, res) => {
 	}
 };
 
+export const getMentorsAvailable = async (req, res) => {
+	try {
+		const [result, metadata] = await db.query(`
+			SELECT mentors.id, name as name_mentor, last_name as last_name_mentor
+			FROM 
+				mentors
+			WHERE 
+				num_students > SOME (
+					SELECT COUNT(id_mentors_fk)
+					FROM 
+						_matchs
+					WHERE 
+						_matchs.id_mentors_fk = mentors.id
+				)
+		`);
+		res.json(result);
+	} catch (error) {
+		res.json({ message: error.message });
+	}
+}
+
 export const getOneMentor = async (req, res) => {
 	try {
 		const mentor = await MentorModel.findAll({
