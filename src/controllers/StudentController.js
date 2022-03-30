@@ -42,6 +42,17 @@ export const getAllStudents = async (req, res) => {
 	} catch (error) {
 		res.json({ message: error.message })
 	}
+}
+export const getMaxCohort = async (req, res) => {
+	try {
+		const [ result, metadata ] = await db.query(`
+      SELECT max(cohort)
+      FROM students
+    `);
+		res.json(result)
+	} catch (error) {
+		res.json({ message: error.message });
+	}
 };
 
 export const getOneStudent = async (req, res) => {
