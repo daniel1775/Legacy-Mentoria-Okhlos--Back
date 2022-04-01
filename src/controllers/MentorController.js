@@ -190,3 +190,22 @@ export const getMentorsMatch = async () => {
 		console.log("message:" + error.message)
 	}
 };
+
+
+
+export const getMentorbyId = async (id) => {
+	console.log("getMentorbyId: "+id)
+	try {
+		const result = await db.query(`
+			SELECT id, name, last_name
+			FROM 
+				mentors
+			WHERE
+				id = ${id}
+		`)
+
+		return(result)
+	} catch (error) {
+		console.log("mensaje: "+error);
+	}
+}

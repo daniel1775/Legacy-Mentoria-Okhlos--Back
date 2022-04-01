@@ -1,6 +1,6 @@
 import db from '../db/db.js';
 import { getStudentInterests, getStudentAge } from "./StudentController.js"
-import { getMentorsMatch, getMentorsAvailable, getMentorsAvailableLocal } from "./MentorController.js"
+import { getMentorsMatch, getMentorbyId, getMentorsAvailableLocal } from "./MentorController.js"
 
 export const getMatchCohort = async (req, res) => {
 	try {
@@ -93,8 +93,15 @@ export const calculateMatch = async (req, res) => {
 
     /* console.log("mentors_total: "+JSON.stringify(mentors_total));
     console.log("max_mentor: "+JSON.stringify(max_mentor)); */
-
-		res.json(max_mentor)
+    let max_mentor_data = await getMentorbyId(max_mentor.id);
+    max_mentor_data = max_mentor_data[0][0];
+    console.log("max_mentor_data: "+JSON.stringify(max_mentor_data));
+		res.json({
+      id_mentor: max_mentor_data.id,
+      name: max_mentor_data.name,
+      last_name: max_mentor_data.last_name,
+      score: max_mentor.total_score
+    })
 	} catch (error) {
 		res.json({ message: error.message });
 	}
