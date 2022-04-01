@@ -4,21 +4,23 @@ import { createAdmin, deleteAdmin, getAdmin, getOneAdmin, updateAdmin } from "..
 import { createBusiness, deleteBusiness, getBusiness, getOneBusiness, updateBusiness } from "../controllers/BusinessController.js";
 import { createInterests, deleteInterests, getInterests, getOneInterests, updateInterests } from "../controllers/InterestsController.js";
 
-import { createMentor, deleteMentor, getMentor, getOneMentor, updateMentor, getMentorsAvailable, getAllMentors, getMentorsAvailable } from "../controllers/MentorController.js";
+import { createMentor, deleteMentor, getMentor, getOneMentor, updateMentor, getMentorsAvailable, getAllMentors } from "../controllers/MentorController.js";
 import { createPrograms, deletePrograms, getOnePrograms, getPrograms, updatePrograms } from "../controllers/ProgramsController.js";
 import { createSessions, deleteSessions, getOneSessions, getSessions, updateSessions, getAllSessions } from "../controllers/SessionsController.js";
-import { createStudent, deleteStudent, getOneStudent, getStudent, updateStudent, getMaxCohort, getAllStudents, searchStudent, getMaxCohort } from "../controllers/StudentController.js";
+import { createStudent, deleteStudent, getOneStudent, getStudent, updateStudent, getAllStudents, searchStudent, getMaxCohort } from "../controllers/StudentController.js";
 import { createStudies, deleteStudies, getOneStudies, getStudies, updateStudies } from "../controllers/StudiesController.js";
 import { createUsers, deleteUsers, getOneUsers, getUsers, updateUsers } from "../controllers/UsersController.js";
 import { checkLogin } from "../controllers/LoginController.js";
-import { getMatch, getMatchCohort } from "../controllers/MatchController.js";
+import { getMatch, getMatchCohort, updateMatch, calculateMatch } from "../controllers/MatchController.js";
 
 const router = express.Router();
 
 router.get('/login/:email/:password', checkLogin)
 
+router.get('/match/calculate/:id_student', calculateMatch)
 router.get('/match/:cohort/:program', getMatchCohort)
 router.get('/matchs', getMatch)
+router.put('/match/update/:id_student/:id_mentor', updateMatch)
 
 router.get('/admin', getAdmin)
 router.get('/admin/:id', getOneAdmin)

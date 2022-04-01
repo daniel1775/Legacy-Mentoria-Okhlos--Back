@@ -113,3 +113,80 @@ export const deleteMentor = async (req, res) => {
 		res.json({ message: error.message });
 	}
 };
+
+export const getMentorsAvailableLocal = async () => {
+	try {
+		const [result, metadata] = await db.query(`
+			SELECT mentors.id as id_mentor, name, last_name,
+				birth_date
+			FROM 
+				mentors
+			WHERE 
+				num_students > SOME (
+					SELECT COUNT(id_mentors_fk)
+					FROM 
+						_matchs
+					WHERE 
+						_matchs.id_mentors_fk = mentors.id
+				)
+		`);
+		
+		// split year of date
+		let mentors = [];
+		for(let i=0 ; i<result.length ; i++){
+			let date = result[i].birth_date.split("-");
+			let year = parseInt(date[0]);
+			let ob = {
+				id_mentor: result[i].id_mentor,
+				name: result[i].name,
+				last_name: result[i].last_name,
+				year: year
+			}
+			mentors.push(ob)
+		}
+
+		return(mentors)
+	} catch (error) {
+		console.log("message:" + error.message);
+	}
+}
+
+export const getMentorsMatch = async () => {
+	try {
+		const result = await db.query(`
+			SELECT mentors.id as id_mentor, mentors.name, mentors.last_name, mentors.birth_date, 
+				mentors_interests.id_interests_fk as interest
+			FROM 
+				mentors,
+				mentors_interests
+			WHERE
+				mentors.id = mentors_interests.id_mentors_fk and
+				num_students > SOME (
+					SELECT COUNT(id_mentors_fk)
+					FROM 
+						_matchs
+					WHERE 
+						_matchs.id_mentors_fk = mentors.id
+				)
+			ORDER BY mentors.id
+		`)
+
+		// split year of date
+		let mentors = [];
+		for(let i=0 ; i<result[0].length ; i++){
+			let date = result[0][i].birth_date.split("-");
+			let year = parseInt(date[0]);
+			let ob = {
+				id_mentor: result[0][i].id_mentor,
+				name: result[0][i].name,
+				last_name: result[0][i].last_name,
+				year: year,
+				interest: result[0][i].interest
+			}
+			mentors.push(ob)
+		}
+		return(mentors);
+	}  catch (error) {
+		console.log("message:" + error.message)
+	}
+};

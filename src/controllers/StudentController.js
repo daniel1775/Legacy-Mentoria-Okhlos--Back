@@ -112,3 +112,45 @@ export const searchStudent = async (req, res) => {
 		res.json({ message: error.message })
 	}
 };
+
+export const getStudentInterests = async (id) => {
+	try {
+		const student = await db.query(`
+			SELECT students.id as id_student, students_interests.id_interests_fk as interest 
+			FROM
+				students,
+				students_interests
+			WHERE
+				students.id = students_interests.id_students_fk and
+				students.id = ${id}
+		`)
+
+		let interests = []
+		
+		for(let i=0 ; i<3 ; i++){
+			interests.push(student[0][i].interest);
+		}
+
+		return(interests)
+	} catch (error) {
+		console.log("message:" + error.message)
+	}
+};
+
+export const getStudentAge = async (id) => {
+	try {
+		const student = await db.query(`
+			SELECT students.birth_date
+			FROM
+				students
+			WHERE
+				students.id = ${id}
+		`)
+		let date = student[0][0].birth_date.split("-");
+		let year = parseInt(date[0]);
+		
+		return(year);
+	}  catch (error) {
+		console.log("message:" + error.message)
+	}
+};
