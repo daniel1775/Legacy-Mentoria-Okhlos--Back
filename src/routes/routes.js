@@ -11,7 +11,7 @@ import { createStudent, deleteStudent, getOneStudent, getStudent, updateStudent,
 import { createStudies, deleteStudies, getOneStudies, getStudies, updateStudies } from "../controllers/StudiesController.js";
 import { createUsers, deleteUsers, getOneUsers, getUsers, updateUsers } from "../controllers/UsersController.js";
 import { checkLogin } from "../controllers/LoginController.js";
-import { getMatch, getMatchCohort, updateMatch, calculateMatch } from "../controllers/MatchController.js";
+import { getMatch, getMatchCohort, updateMatch, calculateMatch, updateMatchAutomatic } from "../controllers/MatchController.js";
 
 const router = express.Router();
 
@@ -21,6 +21,7 @@ router.get('/match/calculate/:id_student', calculateMatch)
 router.get('/match/:cohort/:program', getMatchCohort)
 router.get('/matchs', getMatch)
 router.put('/match/update/:id_student/:id_mentor', updateMatch)
+router.put('/match/confirm', updateMatchAutomatic)
 
 router.get('/admin', getAdmin)
 router.get('/admin/:id', getOneAdmin)

@@ -52,6 +52,26 @@ export const updateMatch = async (req, res) => {
 	}
 };
 
+export const updateMatchAutomatic = async (req, res) => {
+  try{
+    const id_student = req.body.id_student;
+    const id_mentor = req.body.id_mentor;
+    const score = req.body.score;
+
+    const [ result, metadata ] = await db.query(`
+      UPDATE _matchs
+      SET 
+        id_mentors_fk = ${id_mentor},
+        score = ${score}
+      WHERE id_students_fk = ${id_student}
+    `);
+
+    res.json(result)
+  }catch(error){
+    res.json({ message: error.message });
+  }
+};
+
 export const calculateMatch = async (req, res) => {
 	try {
     const id_student = req.params.id_student;
