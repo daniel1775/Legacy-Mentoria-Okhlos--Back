@@ -7,11 +7,11 @@ import { createInterests, deleteInterests, getInterests, getOneInterests, update
 import { createMentor, deleteMentor, getMentor, getOneMentor, updateMentor, getMentorsAvailable, getAllMentors } from "../controllers/MentorController.js";
 import { createPrograms, deletePrograms, getOnePrograms, getPrograms, updatePrograms } from "../controllers/ProgramsController.js";
 import { createSessions, deleteSessions, getOneSessions, getSessions, updateSessions, getAllSessions } from "../controllers/SessionsController.js";
-import { createStudent, deleteStudent, getOneStudent, getStudent, updateStudent, getAllStudents, searchStudent, getMaxCohort } from "../controllers/StudentController.js";
+import { createStudent, deleteStudent, getOneStudent, getStudent, updateStudent, getAllStudents, searchStudent, getMaxCohort, getStudentsAvailable } from "../controllers/StudentController.js";
 import { createStudies, deleteStudies, getOneStudies, getStudies, updateStudies } from "../controllers/StudiesController.js";
 import { createUsers, deleteUsers, getOneUsers, getUsers, updateUsers } from "../controllers/UsersController.js";
 import { checkLogin } from "../controllers/LoginController.js";
-import { getMatch, getMatchCohort, updateMatch, calculateMatch, updateMatchAutomatic } from "../controllers/MatchController.js";
+import { getMatch, getMatchCohort, updateMatch, calculateMatch, updateMatchAutomatic, createMatch } from "../controllers/MatchController.js";
 
 const router = express.Router();
 
@@ -22,6 +22,7 @@ router.get('/match/:cohort/:program', getMatchCohort)
 router.get('/matchs', getMatch)
 router.put('/match/update/:id_student/:id_mentor', updateMatch)
 router.put('/match/confirm', updateMatchAutomatic)
+router.post('/match/create', createMatch)
 
 router.get('/admin', getAdmin)
 router.get('/admin/:id', getOneAdmin)
@@ -36,7 +37,7 @@ router.post('/mentor', createMentor)
 router.put('/mentor/:id', updateMentor)
 router.delete('/mentor/:id', deleteMentor)
 router.delete('/admin/:id', deleteMentor)
-router.get('/mentors-available', getMentorsAvailable)
+router.get('/mentors/available', getMentorsAvailable)
 
 
 router.get('/all-sessions', getAllSessions)
@@ -54,6 +55,7 @@ router.get('/students/max-cohort', getMaxCohort)
 router.post('/student', createStudent)
 router.put('/student/:id', updateStudent)
 router.delete('/student/:id', deleteStudent)
+router.get('/students/available', getStudentsAvailable)
 
 router.get('/actual-role', getActualRole)
 router.get('/actual-role/:id', getOneActualRole)

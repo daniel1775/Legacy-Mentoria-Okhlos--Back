@@ -52,6 +52,25 @@ export const updateMatch = async (req, res) => {
 	}
 };
 
+export const createMatch = async (req, res) => {
+  try{
+    const id_student = req.body.id_student;
+    const id_mentor = req.body.id_mentor;
+    const score = req.body.score;
+    const cohort = req.body.cohort;
+    const program = req.body.program;
+
+    const [ result, metadata ] = await db.query(`
+      INSERT INTO _matchs(id_students_fk, id_mentors_fk, score, cohort, id_programs_fk)
+      VALUES(${id_student}, ${id_mentor}, ${score}, ${cohort}, ${program});
+    `);
+
+    res.json(result)
+  }catch(error){
+    res.json({ message: error.message });
+  }
+}
+
 export const updateMatchAutomatic = async (req, res) => {
   try{
     const id_student = req.body.id_student;

@@ -45,6 +45,7 @@ export const getAllMentors = async (req, res) => {
         res.json( {message: error.message} )
     }
 };
+
 export const getMentorsAvailable = async (req, res) => {
 	try {
 		const [result, metadata] = await db.query(`

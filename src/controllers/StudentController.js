@@ -154,3 +154,25 @@ export const getStudentAge = async (id) => {
 		console.log("message:" + error.message)
 	}
 };
+
+export const getStudentsAvailable = async (req, res) => {
+	try {
+		const [result, metadata] = await db.query(`
+		SELECT students.id as id_student, students.name, students.last_name, students.birth_date
+		FROM 
+			students
+		WHERE
+			students.id not in (
+				SELECT id_students_fk
+				FROM 
+					_matchs
+				WHERE 
+					_matchs.id_students_fk = students.id
+			)
+		ORDER BY students.id
+		`);
+		res.json(result);
+	} catch (error) {
+		res.json({ message: error.message });
+	}
+};
