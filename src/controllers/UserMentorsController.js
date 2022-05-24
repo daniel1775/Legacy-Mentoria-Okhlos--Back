@@ -2,8 +2,9 @@ import db from '../db/db.js';
 
 export const getUserMentor = async (req,res) => {
     try {
-        const result = await db.query(`SELECT mentors.name, mentors.email, mentors.age, mentors.phone, studies.title, Businesses.name, Cargos.name FROM mentors, Businesses, studies, Cargos WHERE studies.id = mentors.id_studies and Businesses.id = mentors.id_bussiness and Cargos.id = mentors.id_cargo;`)
-        res.json(result);
+        const result = await db.query(`SELECT mentors.id, mentors.name, mentors.email, mentors.age, mentors.phone, studies.title, Businesses.name as company, Cargos.name as cargo FROM mentors, Businesses, studies, Cargos WHERE studies.id = mentors.id_studies and Businesses.id = mentors.id_bussiness and Cargos.id = mentors.id_cargo ORDER BY Estudiantes.name;
+        `)
+        res.json(result[0]);
     } catch (error) {
         res.json({ message: error.message });
     }
