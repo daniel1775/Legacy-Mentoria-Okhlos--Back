@@ -60,15 +60,9 @@ export const getMaxCohort = async (req, res) => {
 export const searchStudent = async (req, res) => {
 
 	try {
-		const student = await student.findAll({
-			where:{name:'julian'},
-		});
-		if (student === null) {
-			console.log('Not found!');
-		  } else {
-			res.json(student);
-		}
-		
+		const student = await db.query('SELECT * FROM estudiantes WHERE name LIKE "%' + req.params.name + '%"'
+		)
+		res.json(student);
 	}  catch (error) {
 		res.json({ message: error.message })
 	}
