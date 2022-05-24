@@ -58,17 +58,23 @@ router.post('/sessions', createSessions) //funciona
 router.put('/sessions/:id', updateSessions) //funciona
 router.delete('/sessions/:id', deleteSessions) //funciona
 
-//revisar
+
+//################# StudentController ##################
+
+router.get('/students', getStudent)//funciona
 router.get('/all-students', getAllStudents) //funciona
-router.get('/students', getStudent)
-router.get('/search-students/:name', searchStudent)
+router.get('/students/max-cohort', getMaxCohort)//funciona
+router.get('/search-students/:name', searchStudent)//funciona raro
 router.get('/student/:id', getOneStudent) //funciona
-router.get('/students/max-cohort', getMaxCohort)
-router.post('/student', createStudent)
-router.put('/student/:id', updateStudent)
-router.put('/studentOff/:id', studentOff )
-router.delete('/student/:id', deleteStudent)
+
+router.post('/student', createStudent)//funciona
+router.put('/student/:id', updateStudent)//Rota
+router.put('/studentOff/:id', studentOff )//Funciona
+router.delete('/student/:id', deleteStudent)//funciona
 router.get('/students/available', getStudentsAvailable)//funciona
+
+//######################################################
+
 
 router.get('/cargo', getActualRole) //funciona
 router.get('/cargo/:id', getOneActualRole) //funciona
