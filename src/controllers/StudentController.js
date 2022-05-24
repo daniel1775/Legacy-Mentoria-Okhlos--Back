@@ -62,7 +62,7 @@ export const searchStudent = async (req, res) => {
 	try {
 		const student = await db.query('SELECT * FROM estudiantes WHERE name LIKE "%' + req.params.name + '%"'
 		)
-		res.json(student);
+		res.json(student[0]);
 	}  catch (error) {
 		res.json({ message: error.message })
 	}
