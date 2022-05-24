@@ -68,7 +68,7 @@ router.get('/search-students/:name', searchStudent)//funciona raro
 router.get('/student/:id', getOneStudent) //funciona
 
 router.post('/student', createStudent)//funciona
-router.put('/student/update/:id', updateStudent)//Rota
+router.put('/student/update/:id', updateStudent)//funciona
 router.put('/studentOff/:id', studentOff )//Funciona
 router.delete('/student/:id', deleteStudent)//funciona
 router.get('/students/available', getStudentsAvailable)//funciona
