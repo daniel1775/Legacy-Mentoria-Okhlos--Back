@@ -62,7 +62,7 @@ export const deleteMentor = async (req, res) => {
 
 export const getMentor = async (req, res) => {
     try {
-        const result = await db.query(`SELECT mentors.id, mentors.name, Businesses.name, Cargos.name, studies.title, users.email, mentors.status, Interests.name, mentors_interests.nivel, programs.name FROM mentors_interests, mentors, Interests, users, programs, Mentor_program, Businesses, Cargos, studies WHERE mentors_interests.id_mentor = mentors.id and mentors_interests.id_interest = Interests.id and mentors.id_user = users.id and Mentor_program.id_mentor = mentors.id and Mentor_program.id_program = programs.id and Businesses.id = mentors.id_bussiness and Cargos.id = mentors.id_cargo and studies.id = mentors.id_studies; `)
+        const result = await db.query(`SELECT mentors.id, mentors.name, Businesses.name as company, Cargos.name as cargo, studies.title, users.email, mentors.status, Interests.name as interest, mentors_interests.nivel, programs.name as program FROM mentors_interests, mentors, Interests, users, programs, Mentor_program, Businesses, Cargos, studies WHERE mentors_interests.id_mentor = mentors.id and mentors_interests.id_interest = Interests.id and mentors.id_user = users.id and Mentor_program.id_mentor = mentors.id and Mentor_program.id_program = programs.id and Businesses.id = mentors.id_bussiness and Cargos.id = mentors.id_cargo and studies.id = mentors.id_studies; `)
         res.json(result);
     } catch (error) {
         res.json({ message: error.message });
