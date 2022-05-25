@@ -106,6 +106,7 @@ export const searchStudent = async (req, res) => {
 	}
 };
 
+
 export const getStudentInterests = async (id) => {
 	try {
 		const student = await db.query(`
@@ -150,7 +151,6 @@ export const getStudentAge = async (id) => {
 
 
 // Personas sin mentor
-
 export const getStudentsAvailable = async (req, res) => {
 	try {
 		const [result, metadata] = await db.query(`
@@ -167,7 +167,6 @@ export const getStudentsAvailable = async (req, res) => {
 };
 
 // Apagar estudiante
-
 export const studentOff = async (req, res) => {
 	try {
 		await db.query(`
@@ -185,3 +184,19 @@ export const studentOff = async (req, res) => {
 		res.json({ message: error.message });
 	}
 };
+
+// nombre y id de los mentores  con sus respectivos estudiantes asignados
+export const student_assigned = async (req, res) => {
+	try {
+		const [result, metadata] = await db.query(`
+		SELECT e.name as nombreEstudiante, m.name NombreMentor  FROM estudiantes  e
+			INNER JOIN matchs ma ON
+				e.id = ma.id_estudiante
+				INNER JOIN mentors m ON
+				m.id = ma.id_mentor;
+		`);
+		res.json(result);
+	} catch (error) {
+		res.json({ message: error.message });
+	}
+}
