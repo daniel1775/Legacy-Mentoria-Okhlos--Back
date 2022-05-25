@@ -20,7 +20,7 @@ import { isAuth } from "../middelwares/auth.js";
 import { loginP } from "../controllers/PruebaLogin.js";
 
 
-import {getUserMentor} from "../controllers/UserMentorsController.js"
+import { getUserMentor } from "../controllers/UserMentorsController.js"
 
 const router = express.Router();
 
@@ -116,6 +116,7 @@ router.get('/user/student', getUserStudent) //funcionaa
 router.post('/create/userStudent', createUserStudent) //funciona
 router.delete('/delete/userStudent', deleteAllUserStudent) //funciona
 
-router.get('/user/mentor',getUserMentor) 
+router.get('/user/mentor',getUserMentor) //funciona
+
 
 export default router
