@@ -3,6 +3,9 @@ import db from '../db/db.js';
 import { Sequelize } from "sequelize";
 const op = Sequelize.Op;
 
+
+
+//Este controlador obtiene los estudiantes e intereses 
 export const getStudent = async (req, res) => {
 	try {
 		const [result, metadata] = await db.query(`
@@ -28,6 +31,7 @@ export const getStudent = async (req, res) => {
 	}
 };
 
+//Este controlador obtiene TODOS los estudiantes
 export const getAllStudents = async (req, res) => {
 	try {
 		const students = await StudentModel.findAll()
@@ -36,6 +40,8 @@ export const getAllStudents = async (req, res) => {
 		res.json({ message: error.message })
 	}
 }
+
+//Este controlador obtiene la mayor cohorte
 export const getMaxCohort = async (req, res) => {
 	try {
 		const [ result, metadata ] = await db.query(`
@@ -48,6 +54,22 @@ export const getMaxCohort = async (req, res) => {
 	}
 };
 
+
+//Este controlador permite buscar un usuario por el nombre
+// está devolviendo dos resultados
+export const searchStudent = async (req, res) => {
+
+	try {
+		const student = await db.query('SELECT * FROM estudiantes WHERE name LIKE "%' + req.params.name + '%"'
+		)
+		res.json(student[0]);
+	}  catch (error) {
+		res.json({ message: error.message })
+	}
+};
+
+
+//malooo
 export const getOneStudent = async (req, res) => {
 	try {
 		const student = await StudentModel.findAll({
@@ -59,6 +81,8 @@ export const getOneStudent = async (req, res) => {
 	}
 };
 
+
+//Este controlador siver para crear estudiantes
 export const createStudent = async (req, res) => {
 	try {
 		await StudentModel.create(req.body);
@@ -70,6 +94,7 @@ export const createStudent = async (req, res) => {
 	}
 };
 
+//Este controlador sirve para actualizar estudiante
 export const updateStudent = async (req, res) => {
 	try {
 		await StudentModel.update(req.body, {
@@ -83,6 +108,27 @@ export const updateStudent = async (req, res) => {
 	}
 };
 
+// Apagar estudiante
+export const studentOff = async (req, res) => {
+	try {
+		await db.query(`
+		UPDATE
+			estudiantes 
+		SET 
+			estudiantes.status =NOT(estudiantes.status) 
+		WHERE estudiantes.id = ${req.params.id};
+		`)
+		
+		res.json({
+			message: '¡status actualizado correctamente!',
+		});
+	} catch (error) {
+		res.json({ message: error.message });
+	}
+};
+
+
+//Este controlador sirve para eliminar
 export const deleteStudent = async (req, res) => {
 	try {
 		await StudentModel.destroy({
@@ -96,16 +142,23 @@ export const deleteStudent = async (req, res) => {
 	}
 };
 
-export const searchStudent = async (req, res) => {
-
+// Personas sin mentor
+export const getStudentsAvailable = async (req, res) => {
 	try {
-		const student = await db.query('SELECT * FROM estudiantes WHERE name LIKE "%' + req.params.name + '%"')
-		res.json(student);
-	}  catch (error) {
-		res.json({ message: error.message })
+		const [result, metadata] = await db.query(`
+		SELECT estudiantes.id, estudiantes.name, estudiantes.age 
+	FROM 
+		estudiantes,matchs 
+	WHERE 
+		estudiantes.id <> matchs.id_estudiante;
+		`);
+		res.json(result);
+	} catch (error) {
+		res.json({ message: error.message });
 	}
 };
 
+//Este controlador sirve para
 export const getStudentInterests = async (id) => {
 	try {
 		const student = await db.query(`
@@ -130,6 +183,7 @@ export const getStudentInterests = async (id) => {
 	}
 };
 
+//Este controlador sirve para
 export const getStudentAge = async (id) => {
 	try {
 		const student = await db.query(`
@@ -149,39 +203,3 @@ export const getStudentAge = async (id) => {
 };
 
 
-// Personas sin mentor
-
-export const getStudentsAvailable = async (req, res) => {
-	try {
-		const [result, metadata] = await db.query(`
-		SELECT estudiantes.id, estudiantes.name, estudiantes.age 
-	FROM 
-		estudiantes,matchs 
-	WHERE 
-		estudiantes.id <> matchs.id_estudiante;
-		`);
-		res.json(result);
-	} catch (error) {
-		res.json({ message: error.message });
-	}
-};
-
-// Apagar estudiante
-
-export const studentOff = async (req, res) => {
-	try {
-		await db.query(`
-		UPDATE
-			estudiantes 
-		SET 
-			estudiantes.status =NOT(estudiantes.status) 
-		WHERE estudiantes.id = ${req.params.id};
-		`)
-		
-		res.json({
-			message: '¡status actualizado correctamente!',
-		});
-	} catch (error) {
-		res.json({ message: error.message });
-	}
-};
