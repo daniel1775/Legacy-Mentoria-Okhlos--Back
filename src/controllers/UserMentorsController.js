@@ -34,3 +34,4 @@ export const deleteAllUserStudent = async(req,res) => {
         res.json({ message: error.message });
     }
 }
+
