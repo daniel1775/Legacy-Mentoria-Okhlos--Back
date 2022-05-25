@@ -20,7 +20,7 @@ import { isAuth } from "../middelwares/auth.js";
 import { loginP } from "../controllers/PruebaLogin.js";
 
 
-import {getUserMentor} from "../controllers/UserMentorsController.js"
+import { getUserMentor } from "../controllers/UserMentorsController.js"
 
 const router = express.Router();
 
@@ -64,7 +64,7 @@ router.delete('/sessions/:id', deleteSessions) //funciona
 router.get('/students', getStudent)//funciona
 router.get('/all-students', getAllStudents) //funciona
 router.get('/students/max-cohort', getMaxCohort)//funciona
-router.get('/search-students/:name', searchStudent)//funciona raro
+router.get('/search-students/:name', searchStudent)//funciona
 router.get('/student/:id', getOneStudent) //funciona
 
 router.post('/student', createStudent)//funciona
@@ -119,6 +119,7 @@ router.get('/user/student', getUserStudent) //funcionaa
 router.post('/create/userStudent', createUserStudent) //funciona
 router.delete('/delete/userStudent', deleteAllUserStudent) //funciona
 
-router.get('/user/mentor',getUserMentor) 
+router.get('/user/mentor',getUserMentor) //funciona
+
 
 export default router
