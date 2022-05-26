@@ -8,8 +8,8 @@ import { Sequelize } from "sequelize";
 
 // })
 
-const db = new Sequelize(process.env.DB_DATABASE || 'heroku_e691640e5c518b5', process.env.DB_USER || 'ovfdg77mq8lsi2mt', process.env.DB_PASSWORD || 'a031feee',{
-    host: process.env.DB_HOST || 'us-cdbr-east-05.cleardb.net',
+const db = new Sequelize(process.env.DB_DATABASE || 'okhlos', process.env.DB_USER || 'root', process.env.DB_PASSWORD || '',{
+    host: process.env.DB_HOST || 'localhost',
     dialect: 'mysql'
 })
 

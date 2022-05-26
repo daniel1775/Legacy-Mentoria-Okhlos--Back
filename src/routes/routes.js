@@ -8,7 +8,7 @@ import { createMentor, deleteMentor, getMentor, getOneMentor, updateMentor, getA
 
 import { createPrograms, deletePrograms, getOnePrograms, getPrograms, updatePrograms } from "../controllers/ProgramsController.js";
 import { createSessions, deleteSessions, getOneSessions, getSessions, updateSessions, getAllSessions } from "../controllers/SessionsController.js";
-import { createStudent, deleteStudent, getOneStudent, getStudent, updateStudent, getAllStudents, searchStudent, getMaxCohort, getStudentsAvailable,studentOff, getCohorte } from "../controllers/StudentController.js";
+import { createStudent, deleteStudent, getOneStudent, getStudent, updateStudent, getAllStudents, searchStudent, getMaxCohort, getStudentsAvailable,studentOff, getCohorte, getStudentsByCohort } from "../controllers/StudentController.js";
 import { createStudies, deleteStudies, getOneStudies, getStudies, updateStudies } from "../controllers/StudiesController.js";
 import { createUsers, deleteUsers, getOneUsers, getUsers, register, updateUsers } from "../controllers/UsersController.js";
 import { authController, checkLogin } from "../controllers/LoginController.js";
@@ -68,6 +68,7 @@ router.get('/students/max-cohort', getMaxCohort)//funciona
 router.get('/search-students/:name', searchStudent)//funciona
 router.get('/student/:id', getOneStudent) //funciona
 router.get('/cohorte', getCohorte) //funciona
+router.get('/students/:cohort', getStudentsByCohort) //funciona
 
 router.post('/student', createStudent)//funciona
 router.put('/student/update/:id', updateStudent)//funciona
