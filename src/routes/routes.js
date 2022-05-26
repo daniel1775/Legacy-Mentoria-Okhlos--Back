@@ -20,7 +20,9 @@ import { isAuth } from "../middelwares/auth.js";
 import { loginP } from "../controllers/PruebaLogin.js";
 
 
-import { getUserMentor } from "../controllers/UserMentorsController.js"
+import { getUserMentor, createUserMentor } from "../controllers/UserMentorsController.js"
+import {massiveDataStudent} from '../controllers/testMassive.js'
+
 
 const router = express.Router();
 
@@ -117,6 +119,8 @@ router.post('/create/userStudent', createUserStudent) //funciona
 router.delete('/delete/userStudent', deleteAllUserStudent) //funciona
 
 router.get('/user/mentor',getUserMentor) //funciona
+router.post('/create/userMentor',createUserMentor)
 
+router.post('/StudentMasiva',massiveDataStudent)
 
 export default router

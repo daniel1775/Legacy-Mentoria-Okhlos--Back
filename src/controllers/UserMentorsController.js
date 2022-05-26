@@ -10,12 +10,11 @@ export const getUserMentor = async (req,res) => {
     }
 }
 
-export const createUserStudent = async (req,res) => {
+export const createUserMentor = async (req,res) => {
     try {
         await db.query(`INSERT INTO users (email,password,role) VALUES ('${req.body.email}','mentor123','mentor');`)
 
-        await db.query(`INSERT INTO mentors (name,email,age,sons,num_estudiantes,phone,status,gender,id_studies,id_bussiness, id_cargo,id_user) VALUES ('majoTest','${req.body.email}',56,3,2,23456,1,'Femenino',(SELECT studies.id FROM studies WHERE studies.title = 'Artes Visuales'),(SELECT Businesses.id FROM Businesses WHERE Businesses.name = 'Davivienda'),(SELECT Cargos.id FROM Cargos WHERE Cargos.name = 'Project Leader'),(SELECT users.id FROM users WHERE users.email = '${req.body.email}'));`)
-
+        await db.query(`INSERT INTO mentors (name,email,age,sons,num_estudiantes,phone,status,gender,id_studies,id_bussiness, id_cargo,id_user) VALUES ('${req.body.name}','${req.body.email}',${req.body.age},${req.body.sons},${req.body.num_estudiantes},${req.body.phone},${req.body.status},'${req.body.gender}',(SELECT studies.id FROM studies WHERE studies.title = '${req.body.title}'),(SELECT Businesses.id FROM Businesses WHERE Businesses.name = '${req.body.company}'),(SELECT Cargos.id FROM Cargos WHERE Cargos.name = '${req.body.cargo}'),(SELECT users.id FROM users WHERE users.email = '${req.body.email}')); `)
 		res.json({
 			message: '¡Registro creado correctamente!',
 		});
