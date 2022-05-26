@@ -111,6 +111,9 @@ router.delete('/studies/:id', deleteStudies) //funciona
 router.get('/users', getUsers) //funciona
 router.get('/users/:id', getOneUsers) //funciona
 router.post('/users', createUsers) //funciona
+//################## contraseña encr#######
+router.post('/users/register', register)
+//#########################################
 router.put('/users/:id', updateUsers) //funciona
 router.delete('/users/:id', deleteUsers) //funciona
 

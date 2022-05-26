@@ -23,18 +23,21 @@ export const loginP = async (req, res) => {
         results[0][0].password,
         function (err, respuesta) {
           if (respuesta) {
-            
+            console.log(respuesta)
             const data ={
                 id : results[0][0].id,
                 role : results[0][0].role
             }
+            console.log(data)
             const token = jsonwebtoken.sign(data, process.env.JWT_SECRET, {
               expiresIn: process.env.JWT_TIME_EXPIRE,
               
             });
+            console.log(token+" TOKENNNNNNNNNNNNN")
             const resToken = {
                 accesToken:token
             }
+            
             //generamos el token SIN fecha de expiracion
             res.json(resToken)
             console.log("TOKEN: " + token + " para el USUARIO : " + email);
