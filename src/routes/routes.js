@@ -13,14 +13,15 @@ import { createStudies, deleteStudies, getOneStudies, getStudies, updateStudies 
 import { createUsers, deleteUsers, getOneUsers, getUsers, register, updateUsers } from "../controllers/UsersController.js";
 import { authController, checkLogin } from "../controllers/LoginController.js";
 // import { getMatch, getMatchCohort, updateMatch, calculateMatch, updateMatchAutomatic, createMatch } from "../controllers/MatchController.js";
-import { createUserStudent, deleteAllUserStudent, getUserStudent } from "../controllers/userStudentsController.js";
 
 //middelwares
 import { isAuth } from "../middelwares/auth.js";
 import { loginP } from "../controllers/PruebaLogin.js";
 
 
-import { getUserMentor } from "../controllers/UserMentorsController.js"
+import { getUserMentor, createUserMentor } from "../controllers/UserMentorsController.js"
+import {massiveDataStudent ,getUserStudent} from '../controllers/testMassive.js'
+
 
 const router = express.Router();
 
@@ -116,10 +117,10 @@ router.put('/users/:id', updateUsers) //funciona
 router.delete('/users/:id', deleteUsers) //funciona
 
 router.get('/user/student', getUserStudent) //funcionaa
-router.post('/create/userStudent', createUserStudent) //funciona
-router.delete('/delete/userStudent', deleteAllUserStudent) //funciona
+router.post('/StudentMasiva',massiveDataStudent) //funciona
 
 router.get('/user/mentor',getUserMentor) //funciona
+router.post('/MentorMasiva',createUserMentor)
 
 
 export default router
