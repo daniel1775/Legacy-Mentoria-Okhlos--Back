@@ -68,7 +68,7 @@ router.get('/students/max-cohort', getMaxCohort)//funciona
 router.get('/search-students/:name', searchStudent)//funciona
 router.get('/student/:id', getOneStudent) //funciona
 router.get('/cohorte', getCohorte) //funciona
-router.get('/students/:cohort', getStudentsByCohort) //funciona
+router.get('/students/cohort/:cohort', getStudentsByCohort) //funciona
 
 router.post('/student', createStudent)//funciona
 router.put('/student/update/:id', updateStudent)//funciona
