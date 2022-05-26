@@ -1,4 +1,4 @@
-import ActualRoleModel from "../models/ActualRoleModel.js"
+import ActualRoleModel from "../models/CargoModel.js"
 
 export const getActualRole = async (req, res) => {
     try {
@@ -26,9 +26,9 @@ export const createActualRole = async (req, res) => {
         res.json({
             "message":"¡Registro creado correctamente!"
         })
-     } catch (error) {
-         res.json( {message: error.message} )
-     }
+    } catch (error) {
+        res.json( {message: error.message} )
+    }
 }
 
 export const updateActualRole = async (req, res) => {

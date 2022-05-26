@@ -4,13 +4,13 @@ import { DataTypes } from "sequelize";
 
 const MentorModel = db.define('mentors', {
     name: { type: DataTypes.STRING },
-    last_name: { type: DataTypes.STRING },
-    birth_date: { type: DataTypes.DATE },
+    email: { type: DataTypes.STRING },
+    age: { type: DataTypes.INTEGER },
     sons: { type: DataTypes.INTEGER },
     num_students: { type: DataTypes.INTEGER },
     phone: { type: DataTypes.INTEGER },
-    active: { type: DataTypes.INTEGER },
-    gender: { type: DataTypes.INTEGER }
+    status: { type: DataTypes.BOOLEAN },
+    gender: { type: DataTypes.STRING }
 })
 
 export default MentorModel;

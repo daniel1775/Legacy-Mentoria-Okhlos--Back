@@ -26,9 +26,9 @@ export const createAdmin = async (req, res) => {
         res.json({
             "message":"¡Registro creado correctamente!"
         })
-     } catch (error) {
-         res.json( {message: error.message} )
-     }
+    } catch (error) {
+        res.json( {message: error.message} )
+    }
 }
 
 export const updateAdmin = async (req, res) => {

@@ -8,7 +8,7 @@ const SessionsModel = db.define('sessions', {
     start_date: { type: DataTypes.DATE },
     end_date: { type: DataTypes.DATE },
     link_meet: { type: DataTypes.STRING },
-    state: { type: DataTypes.INTEGER },
+    status: { type: DataTypes.BOOLEAN },
 })
 
 export default SessionsModel;

@@ -5,7 +5,7 @@ import { DataTypes } from "sequelize";
 const UsersModel = db.define('users', {
     email: { type: DataTypes.STRING },
     password: { type: DataTypes.STRING },
-    role: { type: DataTypes.INTEGER }
+    role: { type: DataTypes.STRING }
 })
 
 export default UsersModel;

@@ -1,41 +1,5 @@
-import MentorModel from '../models/MentorModel.js';
+import '../models/MentorModel.js'
 import db from '../db/db.js';
-
-export const getMentor = async (req, res) => {
-	try {
-		const [result, metadata] = await db.query(`
-      SELECT mentors.id, mentors.name, mentors.last_name, mentors.birth_date,
-        mentors.gender, mentors.phone, users.email, interests.name as interest, programs.name as program,
-        studies.title as studies, businesses.name as businesses, actual_roles.name as role, mentors.active
-      FROM 
-        mentors, 
-        mentors_interests,
-        interests, 
-        programs, 
-        users, 
-        mentors_users,
-        sessions, 
-        businesses, 
-        studies,
-        actual_roles
-      WHERE
-        mentors.id_businesses_fk = businesses.id and
-        mentors.id_studies_fk = studies.id and
-        mentors.id_actual_roles_fk = actual_roles.id and
-        mentors.id_programs_fk = programs.id and
-        mentors.id = mentors_interests.id_mentors_fk and
-        mentors.id = mentors_users.id_mentors_fk and
-        mentors.id = sessions.id_mentors_fk and
-        users.id = mentors_users.id_users_fk and
-        interests.id = mentors_interests.id_interests_fk
-      GROUP BY
-        mentors_interests.id_mentors_fk, sessions.id_mentors_fk
-		`);
-		res.json(result);
-	} catch (error) {
-		res.json({ message: error.message });
-	}
-};
 
 export const getAllMentors = async (req, res) => {
 	try {
@@ -93,3 +57,18 @@ export const deleteMentor = async (req, res) => {
 		res.json({ message: error.message });
 	}
 };
+
+//
+
+export const getMentor = async (req, res) => {
+    try {
+        const result = await db.query(`SELECT mentors.id, mentors.name, Businesses.name as company, Cargos.name as cargo, studies.title, users.email, mentors.status, Interests.name as interest, mentors_interests.nivel, programs.name as program FROM mentors_interests, mentors, Interests, users, programs, Mentor_program, Businesses, Cargos, studies WHERE mentors_interests.id_mentor = mentors.id and mentors_interests.id_interest = Interests.id and mentors.id_user = users.id and Mentor_program.id_mentor = mentors.id and Mentor_program.id_program = programs.id and Businesses.id = mentors.id_bussiness and Cargos.id = mentors.id_cargo and studies.id = mentors.id_studies; `)
+        res.json(result);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+}
+
+
+
+
