@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 app.use(apiRoutes);
 
-const PORT = process.env.PORT || 8000
+const PORT = process.env.PORT || 8001
 
 try {
     await db.authenticate();
@@ -24,5 +24,9 @@ app.get('/', (req, res)=>{
 })
 
 app.listen(PORT, ()=>{
+<<<<<<< HEAD
     console.log('Server started on http://localhost:8000')
+=======
+    console.log('Server started on port 8001')
+>>>>>>> ecdc66332baf42a6d4b476b8e539201225974e13
 })

@@ -1,6 +1,6 @@
 import StudentModel from '../models/StudentModel.js';
 import db from '../db/db.js';
-import { Sequelize } from "sequelize";
+import { json, Sequelize } from "sequelize";
 const op = Sequelize.Op;
 
 
@@ -168,24 +168,33 @@ export const getStudentInterests = async (id) => {
 	}
 };
 
-//Este controlador sirve para
-export const getStudentAge = async (id) => {
+
+
+//Este controlador sirve para obtener las cohortes ordenadas
+
+export const getCohorte = async (req,res) => {
 	try {
-		const student = await db.query(`
-			SELECT students.birth_date
-			FROM
-				students
-			WHERE
-				students.id = ${id}
-		`)
-		let date = student[0][0].birth_date.split("-");
-		let year = parseInt(date[0]);
+		const cohort = await db.query(`SELECT DISTINCT(estudiantes.cohort)
+		FROM estudiantes ORDER BY estudiantes.cohort `)
 		
-		return(year);
+		res.json(cohort[0])
 	}  catch (error) {
 		console.log("message:" + error.message)
 	}
 };
+
+export const getStudentsByCohort = async (req, res) => {
+	try {
+		const result = await db.query(`SELECT estudiantes.id, estudiantes.email, estudiantes.name, estudiantes.cohort, estudiantes.age, estudiantes.phone, estudiantes.status, estudiantes.gender, programs.name as programs FROM estudiantes,programs WHERE estudiantes.cohort = ${req.params.cohort};`)
+		res.json(result[0])
+		
+	}  catch (error) {
+		console.log("message:" + error.message)
+	}
+}
+
+
+
 
 
 
