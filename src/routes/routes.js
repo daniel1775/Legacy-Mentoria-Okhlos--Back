@@ -4,11 +4,11 @@ import { createAdmin, deleteAdmin, getAdmin, getOneAdmin, updateAdmin } from "..
 import { createBusiness, deleteBusiness, getBusiness, getOneBusiness, updateBusiness } from "../controllers/BusinessController.js";
 import { createInterests, deleteInterests, getInterests, getOneInterests, updateInterests } from "../controllers/InterestsController.js";
 
-import { createMentor, deleteMentor, getMentor, getOneMentor, updateMentor, getAllMentors } from "../controllers/MentorController.js";
+import { createMentor, deleteMentor, getMentor, getOneMentor, updateMentor, getAllMentors, mentorStatus, getMentorsAvailable, mentor_assigned } from "../controllers/MentorController.js";
 
 import { createPrograms, deletePrograms, getOnePrograms, getPrograms, updatePrograms } from "../controllers/ProgramsController.js";
 import { createSessions, deleteSessions, getOneSessions, getSessions, updateSessions, getAllSessions } from "../controllers/SessionsController.js";
-import { createStudent, deleteStudent, getOneStudent, getStudent, updateStudent, getAllStudents, searchStudent, getMaxCohort, getStudentsAvailable,studentOff } from "../controllers/StudentController.js";
+import { createStudent, deleteStudent, getOneStudent, getStudent, updateStudent, getAllStudents, searchStudent, getMaxCohort, getStudentsAvailable,studentOff,student_assigned } from "../controllers/StudentController.js";
 import { createStudies, deleteStudies, getOneStudies, getStudies, updateStudies } from "../controllers/StudiesController.js";
 import { createUsers, deleteUsers, getOneUsers, getUsers, register, updateUsers } from "../controllers/UsersController.js";
 import { authController, checkLogin } from "../controllers/LoginController.js";
@@ -50,7 +50,9 @@ router.get('/mentor/:id', getOneMentor) //funciona
 router.post('/mentor', createMentor) //funciona
 router.put('/mentor/:id', updateMentor) //funciona
 router.delete('/mentor/:id', deleteMentor) //funciona
-// router.get('/mentors/available', getMentorsAvailable)
+router.put('/mentorStatus/:id', mentorStatus )// funciona
+ router.get('/mentors/available', getMentorsAvailable) //funciona
+ router.get("/mentorAssigned",mentor_assigned)//funciona
 
 router.get('/all-sessions', getAllSessions) //funciona
 router.get('/sessions', getSessions) //funciona
@@ -73,6 +75,8 @@ router.put('/student/update/:id', updateStudent)//funciona
 router.put('/studentOff/:id', studentOff )//Funciona
 router.delete('/student/:id', deleteStudent)//funciona
 router.get('/students/available', getStudentsAvailable)//funciona
+router.get('/students/assigned', student_assigned) //funciona
+
 
 //######################################################
 
@@ -82,6 +86,8 @@ router.get('/cargo/:id', getOneActualRole) //funciona
 router.post('/cargo', createActualRole) //funciona
 router.put('/cargo/:id', updateActualRole) //funciona
 router.delete('/cargo/:id', deleteActualRole) //funciona
+
+
 
 router.get('/business', getBusiness) //funciona
 router.get('/business/:id', getOneBusiness) //funciona
@@ -121,6 +127,5 @@ router.post('/StudentMasiva',massiveDataStudent) //funciona
 
 router.get('/user/mentor',getUserMentor) //funciona
 router.post('/MentorMasiva',createUserMentor)
-
 
 export default router
