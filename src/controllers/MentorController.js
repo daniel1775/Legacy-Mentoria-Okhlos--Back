@@ -77,25 +77,9 @@ export const deleteMentor = async (req, res) => {
 //
 export const getMentor = async (req, res) => {
   try {
-    const result = await db.query(
-      `SELECT mentors.name as nombreMentor, mentors.age, mentors.phone, studies.title as Estudios, 
-		businesses.name as Empresa , cargos.name as Cargo, interests.name as Intereses
-		FROM
-	   mentors,
-	    businesses,
-		studies,
-		cargos,
-		mentors_interests,
-		interests
-	  WHERE
-	   studies.id = mentors.id_studies and
-	  businesses.id = mentors.id_bussiness and
-	  cargos.id = mentors.id_cargo and
-	 mentors_interests.id_mentor = interests.id
-	  ;`
-    );
+    const result = await db.query(`SELECT mentors.name as nombreMentor, mentors.age, mentors.phone, studies.title as Estudios, Businesses.name as Empresa , Cargos.name as Cargo, Interests.name as Intereses, mentors_interests.nivel FROM mentors, Businesses,studies,Cargos, Interests, mentors_interests WHERE studies.id = mentors.id_studies and Businesses.id = mentors.id_bussiness and Cargos.id = mentors.id_cargo and mentors_interests.id_interest = Interests.id and mentors_interests.id_mentor = mentors.id;`);
 
-    res.json(result);
+    res.json(result[0]);
   } catch (error) {
     res.json({
       message: error.message,
@@ -106,13 +90,7 @@ export const getMentor = async (req, res) => {
 // togle mentor status
 export const mentorStatus = async (req, res) => {
   try {
-    await db.query(`
-		UPDATE
-			mentors
-		SET 
-			mentors.status =NOT(mentors.status) 
-		WHERE mentors.id = ${req.params.id};
-		`);
+    await db.query(`UPDATE mentors SET mentors.status =NOT(mentors.status) WHERE mentors.id = ${req.params.id};`);
 
     res.json({
       message: "¡status actualizado correctamente!",
@@ -127,11 +105,8 @@ export const mentorStatus = async (req, res) => {
 //Trae todos los mentores que aun tengan cupo para ser mentores de mas estudiantes
 export const getMentorsAvailable = async (req, res) => {
   try {
-    const [result, metadata] = await db.query(`
-			SELECT  id,name FROM mentors m WHERE m.num_estudiantes > (SELECT COUNT(*) 
-				FROM 
-					matchs ma WHERE m.id = ma.id_mentor)
-		`);
+    const result = await db.query(`
+			SELECT  id,name FROM mentors m WHERE m.num_estudiantes > (SELECT COUNT(*) FROM matchs ma WHERE m.id = ma.id_mentor)`);
     res.json(result);
   } catch (error) {
     res.json({
