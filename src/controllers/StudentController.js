@@ -8,7 +8,7 @@ const op = Sequelize.Op;
 //Este controlador obtiene los estudiantes e intereses 
 export const getStudent = async (req, res) => {
 	try {
-		const [result, metadata] = await db.query(`
+		const result = await db.query(`
 		SELECT 
 			users.email, estudiantes.name, estudiantes.cohort, estudiantes.age, estudiantes.phone, estudiantes.status,estudiantes.gender, programs.name as programa,
 			interests.name as interests, estudiante_interest.nivel
@@ -25,7 +25,7 @@ export const getStudent = async (req, res) => {
 				and 
 					estudiante_interest.id_interest = interests.id;
 		`);
-		res.json(result)
+		res.json(result[0])
 	} catch (error) {
 		res.json({ message: error.message });
 	}
@@ -45,8 +45,8 @@ export const getAllStudents = async (req, res) => {
 export const getMaxCohort = async (req, res) => {
 	try {
 		const [ result, metadata ] = await db.query(`
-      SELECT max(cohort)
-      FROM estudiantes
+		SELECT max(cohort)
+		FROM estudiantes
     `);
 		res.json(result)
 	} catch (error) {
@@ -54,13 +54,11 @@ export const getMaxCohort = async (req, res) => {
 	}
 };
 
-
 //Este controlador permite buscar un usuario por el nombre
-// está devolviendo dos resultados
 export const searchStudent = async (req, res) => {
 
 	try {
-		const student = await db.query('SELECT * FROM estudiantes WHERE name LIKE "%' + req.params.name + '%"'
+		const student = await db.query('SELECT * FROM Estudiantes WHERE name LIKE "%' + req.params.name + '%"'
 		)
 		res.json(student[0]);
 	}  catch (error) {
@@ -68,8 +66,7 @@ export const searchStudent = async (req, res) => {
 	}
 };
 
-
-//malooo
+//funciona
 export const getOneStudent = async (req, res) => {
 	try {
 		const student = await StudentModel.findAll({
@@ -80,7 +77,6 @@ export const getOneStudent = async (req, res) => {
 		res.json({ message: error.message });
 	}
 };
-
 
 //Este controlador siver para crear estudiantes
 export const createStudent = async (req, res) => {
@@ -108,11 +104,6 @@ export const updateStudent = async (req, res) => {
 	}
 };
 
-// Apagar estudiante
-
-
-
-//Este controlador sirve para eliminar
 export const deleteStudent = async (req, res) => {
 	try {
 		await StudentModel.destroy({
@@ -126,52 +117,25 @@ export const deleteStudent = async (req, res) => {
 	}
 };
 
-// Personas sin mentor
-export const getStudentsAvailable = async (req, res) => {
-	try {
-		const [result, metadata] = await db.query(`
-		SELECT estudiantes.id, estudiantes.name, estudiantes.age 
-	FROM 
-		estudiantes,matchs 
-	WHERE 
-		estudiantes.id <> matchs.id_estudiante;
-		`);
-		res.json(result);
-	} catch (error) {
-		res.json({ message: error.message });
-	}
-};
-
-//Este controlador sirve para
-
-export const getStudentInterests = async (id) => {
+export const getStudentInterests = async (req,res) => {
 	try {
 		const student = await db.query(`
-			SELECT students.id as id_student, students_interests.id_interests_fk as interest 
-			FROM
-				students,
-				students_interests
-			WHERE
-				students.id = students_interests.id_students_fk and
-				students.id = ${id}
+		SELECT Estudiantes.id, Estudiantes.name, Interests.name as Interests, Estudiante_interest.nivel FROM Estudiantes, Interests, Estudiante_interest WHERE Estudiante_interest.id_estudiante = ${req.params.id} and Estudiantes.id = ${req.params.id} and Estudiante_interest.id_interest = Interests.id; 
 		`)
 
-		let interests = []
-		
-		for(let i=0 ; i<3 ; i++){
-			interests.push(student[0][i].interest);
-		}
+		let interestsTest = []
 
-		return(interests)
+		interestsTest.push({"id" : student[0][0].id})
+		for (let i = 0; i < 2; i++) {
+			interestsTest.push({"interest" : student[0][i].Interests , "level" : student[0][i].nivel});
+		}
+		return(interestsTest)
 	} catch (error) {
 		console.log("message:" + error.message)
 	}
 };
 
-
-
 //Este controlador sirve para obtener las cohortes ordenadas
-
 export const getCohorte = async (req,res) => {
 	try {
 		const cohort = await db.query(`SELECT DISTINCT(estudiantes.cohort)
@@ -190,16 +154,20 @@ export const getStudentsByCohort = async (req, res) => {
 		
 	}  catch (error) {
 		console.log("message:" + error.message)
+
+// Personas sin mentor
+export const getStudentsAvailable = async (req, res) => {
+	try {
+		const result = await db.query(`SELECT estudiantes.id, estudiantes.name, estudiantes.age FROM 
+		estudiantes,matchs WHERE estudiantes.id <> matchs.id_estudiante;`);
+		res.json(result[0]);
+	} catch (error) {
+		res.json({ message: error.message });
 	}
 }
 
-
-
-
-
-
-// Apagar estudiante
-export const studentOff = async (req, res) => {
+// togglear status estudiante
+export const toggleStatusStudent = async (req, res) => {
 	try {
 		await db.query(`
 		UPDATE

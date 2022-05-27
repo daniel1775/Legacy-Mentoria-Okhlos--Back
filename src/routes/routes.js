@@ -8,7 +8,7 @@ import { createMentor, deleteMentor, getMentor, getOneMentor, updateMentor, getA
 
 import { createPrograms, deletePrograms, getOnePrograms, getPrograms, updatePrograms } from "../controllers/ProgramsController.js";
 import { createSessions, deleteSessions, getOneSessions, getSessions, updateSessions, getAllSessions } from "../controllers/SessionsController.js";
-import { createStudent, deleteStudent, getOneStudent, getStudent, updateStudent, getAllStudents, searchStudent, getMaxCohort, getStudentsAvailable,studentOff, getCohorte, getStudentsByCohort } from "../controllers/StudentController.js";
+import { createStudent, deleteStudent, getOneStudent, getStudent, updateStudent, getAllStudents, searchStudent, getMaxCohort, getStudentsAvailable,toggleStatusStudent,student_assigned, getStudentInterests } from "../controllers/StudentController.js";
 import { createStudies, deleteStudies, getOneStudies, getStudies, updateStudies } from "../controllers/StudiesController.js";
 import { createUsers, deleteUsers, getOneUsers, getUsers, register, updateUsers } from "../controllers/UsersController.js";
 import { authController, checkLogin } from "../controllers/LoginController.js";
@@ -51,8 +51,8 @@ router.post('/mentor', createMentor) //funciona
 router.put('/mentor/:id', updateMentor) //funciona
 router.delete('/mentor/:id', deleteMentor) //funciona
 router.put('/mentorStatus/:id', mentorStatus )// funciona
- router.get('/mentors/available', getMentorsAvailable) //funciona
- router.get("/mentorAssigned",mentor_assigned)//funciona
+router.get('/mentors/available', getMentorsAvailable) //funciona
+router.get("/mentorAssigned",mentor_assigned)//funciona
 
 router.get('/all-sessions', getAllSessions) //funciona
 router.get('/sessions', getSessions) //funciona
@@ -74,12 +74,12 @@ router.get('/students/cohort/:cohort', getStudentsByCohort) //funciona
 
 router.post('/student', createStudent)//funciona
 router.put('/student/update/:id', updateStudent)//funciona
-router.put('/studentOff/:id', studentOff )//Funciona
+router.put('/studentOff/:id', toggleStatusStudent )//Funciona
 router.delete('/student/:id', deleteStudent)//funciona
 router.get('/students/available', getStudentsAvailable)//funciona
 router.get('/students/assigned', student_assigned) //funciona
 
-
+router.get('/studentInterest/:id',getStudentInterests) //funciona
 //######################################################
 
 
