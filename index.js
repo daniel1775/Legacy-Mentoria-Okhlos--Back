@@ -24,9 +24,5 @@ app.get('/', (req, res)=>{
 })
 
 app.listen(PORT, ()=>{
-<<<<<<< HEAD
-    console.log('Server started on http://localhost:8000')
-=======
     console.log('Server started on port 8001')
->>>>>>> ecdc66332baf42a6d4b476b8e539201225974e13
 })
