@@ -154,6 +154,7 @@ export const getStudentsByCohort = async (req, res) => {
 		
 	}  catch (error) {
 		console.log("message:" + error.message)
+}}
 
 // Personas sin mentor
 export const getStudentsAvailable = async (req, res) => {
