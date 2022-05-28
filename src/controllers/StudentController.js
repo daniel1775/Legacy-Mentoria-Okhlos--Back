@@ -129,7 +129,10 @@ export const getStudentInterests = async (req,res) => {
 		for (let i = 0; i < 2; i++) {
 			interestsTest.push({"interest" : student[0][i].Interests , "level" : student[0][i].nivel});
 		}
+		console.log(interestsTest)
+		res.end()
 		return(interestsTest)
+				
 	} catch (error) {
 		console.log("message:" + error.message)
 	}
@@ -169,9 +172,9 @@ export const toggleStatusStudent = async (req, res) => {
 export const student_assigned = async (req, res) => {
 	try {
 		const [result, metadata] = await db.query(`
-		SELECT e.name as nombreEstudiante, m.name NombreMentor  FROM estudiantes  e
-			INNER JOIN matchs ma ON
-				e.id = ma.id_estudiante
+		SELECT E.name as nombreEstudiante, m.name NombreMentor  FROM Estudiantes  E
+			INNER JOIN Matchs ma ON
+				E.id = ma.id_estudiante
 				INNER JOIN mentors m ON
 				m.id = ma.id_mentor;
 		`);
