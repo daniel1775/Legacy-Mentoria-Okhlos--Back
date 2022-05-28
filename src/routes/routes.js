@@ -8,7 +8,7 @@ import { createMentor, deleteMentor, getMentor, getOneMentor, updateMentor, getA
 
 import { createPrograms, deletePrograms, getOnePrograms, getPrograms, updatePrograms } from "../controllers/ProgramsController.js";
 import { createSessions, deleteSessions, getOneSessions, getSessions, updateSessions, getAllSessions } from "../controllers/SessionsController.js";
-import { createStudent, deleteStudent, getOneStudent, getStudent, updateStudent, getAllStudents, searchStudent, getMaxCohort, getStudentsAvailable,toggleStatusStudent,student_assigned, getStudentInterests } from "../controllers/StudentController.js";
+import { createStudent, deleteStudent, getOneStudent, getStudent, updateStudent, getAllStudents, searchStudent, getMaxCohort, getStudentsAvailable,toggleStatusStudent,student_assigned, getStudentInterests, getCohorte, getStudentsByCohort } from "../controllers/StudentController.js";
 import { createStudies, deleteStudies, getOneStudies, getStudies, updateStudies } from "../controllers/StudiesController.js";
 import { createUsers, deleteUsers, getOneUsers, getUsers, register, updateUsers } from "../controllers/UsersController.js";
 import { authController, checkLogin } from "../controllers/LoginController.js";
