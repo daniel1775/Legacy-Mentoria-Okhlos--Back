@@ -181,7 +181,7 @@ export const getCohorte = async (req,res) => {
 
 export const getStudentsByCohort = async (req, res) => {
 	try {
-		const result = await db.query(`SELECT estudiantes.id, estudiantes.email, estudiantes.name, estudiantes.cohort, estudiantes.age, estudiantes.phone, estudiantes.status, estudiantes.gender, programs.name as programs FROM estudiantes,programs WHERE estudiantes.cohort = ${req.params.cohort};`)
+		const result = await db.query(`SELECT estudiantes.id,estudiantes.name ,estudiantes.email, estudiantes.cohort, estudiantes.age, estudiantes.phone, estudiantes.status, estudiantes.gender, programs.name as programs FROM estudiantes,programs WHERE estudiantes.cohort = ${req.params.cohort};`)
 		res.json(result[0])
 		
 	}  catch (error) {
