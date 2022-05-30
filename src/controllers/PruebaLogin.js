@@ -20,7 +20,7 @@ export const loginP = async (req, res) => {
         switch (results[0][0].role) {
           case 'admin':
             consulta = await db.query(
-              `SELECT admins.name FROM admins WHERE admins.id_user = ${id_user}`
+              `SELECT admins.name FROM admins WHERE admins.id_user = ${id_user[0][0].id}`
             );
             break;
           case 'student':
