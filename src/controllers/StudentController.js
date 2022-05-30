@@ -183,13 +183,8 @@ export const getStudentsByCohort = async (req, res) => {
 	try {
 
 		const cohort = req.params.cohort
-		let program
-		if (cohort != 0){
-			program = 1 //programate
-		}else{
-			program = 2 //proyectate
-		}
-		const result = await db.query(`SELECT estudiantes.id,estudiantes.name,estudiantes.email, estudiantes.cohort, estudiantes.age, estudiantes.phone, estudiantes.status, estudiantes.gender, programs.name as programs FROM estudiantes,programs WHERE estudiantes.cohort = ${req.params.cohort} and estudiantes.id_program = ${program} ;`)
+		const result = await db.query(`SELECT estudiantes.id, estudiantes.name,estudiantes.email, estudiantes.cohort, estudiantes.age, estudiantes.phone, estudiantes.status, estudiantes.gender, programs.name as programs FROM estudiantes, programs WHERE programs.id = estudiantes.id_program and estudiantes.cohort = ${cohort};`)
+		
 		res.json(result[0])
 	}  catch (error) {
 		console.log("message:" + error.message)
