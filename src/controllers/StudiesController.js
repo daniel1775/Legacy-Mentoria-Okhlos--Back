@@ -30,7 +30,7 @@ export const createStudies = async (req, res) => {
          res.json( {message: error.message} )
      }
 }
-
+//no es necesario hacer consulta del problema
 export const updateStudies = async (req, res) => {
     try {
         await StudiesModel.update(req.body, {
