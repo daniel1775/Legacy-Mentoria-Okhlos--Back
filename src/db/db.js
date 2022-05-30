@@ -6,11 +6,10 @@ import { Sequelize } from "sequelize";
     // host: process.env.DB_HOST || 'us-cdbr-east-05.cleardb.net',
     // dialect: 'mysql'
 
-     const db = new Sequelize(process.env.DB_DATABASE || 'Okhlos', process.env.DB_USER || 'root', process.env.DB_PASSWORD || '',{
-         host: process.env.DB_HOST || 'localhost',
-         dialect: 'mysql',
-         port: 3307
- })
+    const db = new Sequelize(process.env.DB_DATABASE || 'Okhlos', process.env.DB_USER || 'root', process.env.DB_PASSWORD || '',{
+        host: process.env.DB_HOST || 'localhost',
+        dialect: 'mysql',
+})
 
 
 export default db
