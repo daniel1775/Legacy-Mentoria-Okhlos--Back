@@ -34,3 +34,7 @@ export const massiveDataStudent = async (req,res) => {
         res.json({ message: error.message });
     }
 }
+
+
+
+

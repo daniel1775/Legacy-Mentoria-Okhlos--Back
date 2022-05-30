@@ -49,7 +49,7 @@ export const loginP = async (req, res) => {
             const data ={
                 id : results[0][0].id,
                 role : results[0][0].role,
-                name : consulta[0][0].name
+                // name : consulta[0][0].name
             }
             console.log(data)
             const token = jsonwebtoken.sign(data, process.env.JWT_SECRET, {
