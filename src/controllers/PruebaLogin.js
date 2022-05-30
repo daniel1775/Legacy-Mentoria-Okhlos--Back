@@ -15,28 +15,6 @@ export const loginP = async (req, res) => {
       const results = await db.query(
         `SELECT * FROM users WHERE email ='${email}'`
       );
-      let consulta;
-      let id_user = await db.query(`SELECT id from users where users.email = '${email}';`)
-        switch (results[0][0].role) {
-          case 'admin':
-            consulta = await db.query(
-              `SELECT admins.name FROM admins WHERE admins.id_user = ${id_user}`
-            );
-            break;
-          case 'student':
-            consulta = await db.query(
-              `SELECT estudiantes.name FROM estudiantes WHERE estudiantes.email = '${email}'`
-            );
-            break;
-          case 'mentor':
-            consulta = await db.query(
-              `SELECT mentors.name FROM mentors WHERE mentors.email = '${email}'`
-            );
-            break;
-          default:
-            break;
-        }
-      console.log(consulta)
       console.log(results);
 
       console.log(results[0][0].password + " SOY LA PASSWORD");
@@ -48,8 +26,7 @@ export const loginP = async (req, res) => {
             console.log(respuesta)
             const data ={
                 id : results[0][0].id,
-                role : results[0][0].role,
-                name : consulta[0][0].name
+                role : results[0][0].role
             }
             console.log(data)
             const token = jsonwebtoken.sign(data, process.env.JWT_SECRET, {
