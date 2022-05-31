@@ -10,7 +10,7 @@ export const getAllMentors = async (req, res) => {
       message: error.message,
     });
   }
-};
+}; 
 
 export const getOneMentor = async (req, res) => {
   try {
@@ -29,8 +29,24 @@ export const getOneMentor = async (req, res) => {
 };
 
 export const createMentor = async (req, res) => {
+
+  let data = req.body
+
   try {
-    await MentorModel.create(req.body);
+    const emailTest = await UsersModel.findOne({ where: { email: data[0][1]} });
+    if (!emailTest) {
+        await db.query(`INSERT INTO users (email,password,role) VALUES ('${data[0][1]}','mentor123','mentor');`)
+
+        await db.query(`INSERT INTO mentors (name,email,age,sons,num_estudiantes,phone,status,gender,id_studies,id_bussiness, id_cargo,id_user) VALUES ('${data[0][0]}','${data[0][1]}',${data[0][2]},${data[0][3]},${data[0][4]},${data[0][5]},${data[0][6]},'${data[0][7]}',(SELECT studies.id FROM studies WHERE studies.title = '${data[0][8]}'),(SELECT Businesses.id FROM Businesses WHERE Businesses.name = '${data[0][9]}'),(SELECT Cargos.id FROM Cargos WHERE Cargos.name = '${data[0][10]}'),(SELECT users.id FROM users WHERE users.email = '${data[0][1]}'));`)
+
+        const id_student = await db.query(`SELECT mentors.id FROM mentors WHERE mentors.email = '${data[0][1]}';`)
+
+        //interes bajo
+        await db.query(`INSERT INTO mentors_interests (mentors_interests.nivel, mentors_interests.id_mentor, mentors_interests.id_interest) VALUES (1,${id_mentor[0][0].id},(SELECT interests.id FROM interests WHERE interests.name = '${data[0][11]}'));`)
+
+        //interes alto
+        await db.query(`INSERT INTO mentors_interests (mentors_interests.nivel, mentors_interests.id_mentor, mentors_interests.id_interest) VALUES (2,${id_mentor[0][0].id},(SELECT interests.id FROM interests WHERE interests.name = '${data[0][12]}'));`)
+    }
     res.json({
       message: "¡Registro creado correctamente!",
     });
@@ -42,12 +58,23 @@ export const createMentor = async (req, res) => {
 };
 
 export const updateMentor = async (req, res) => {
-  try {
-    await MentorModel.update(req.body, {
-      where: {
-        id: req.params.id,
-      },
-    });
+
+  let data = req.body
+
+	try {
+		const id_user = await db.query(`SELECT mentors.id_user FROM mentors WHERE mentors.id = ${req.params.id};`)
+
+		await db.query(`UPDATE users SET users.email = '${data[0][1]}' WHERE users.id = ${id_user[0][0].id_user};`)
+
+		await db.query(`UPDATE mentor SET mentors.name = '${data[0][0]}', mentors.email = '${data[0][1]}', mentors.age = ${data[0][2]}, mentors.sons = ${data[0][3]}, mentors.num_estudiantes = ${data[0][4]}, mentors.phone = ${data[0][5]}, mentors.status = ${data[0][6]}, mentors.gender = '${data[0][7]}', 
+    mentors.id_studies = ${data[0][8]}, mentors.id_bussiness = ${data[0][9]}, mentors.id_cargo = ${data[0][10]}, mentors.id_user = ${id_user[0][0].id_user} WHERE mentors.id = ${req.params.id};`)
+
+		//interes bajo
+		await db.query(`UPDATE mentors_interests SET mentors_interests.nivel = 1, mentors_interests.id_mentor = ${req.params.id}, mentors_interests.id_interest = ${data[0][11]} WHERE mentors_interests.id_mentor = ${req.params.id} and mentors_interests.nivel = 1;`)
+
+		//interes alto
+		await db.query(`UPDATE mentors_interests SET mentors_interests.nivel = 2, mentors_interests.id_mentor = ${req.params.id}, mentors_interests.id_interest = ${data[0][12]} WHERE mentors_interests.id_mentor = ${req.params.id} and mentors_interests.nivel = 2;`)
+
     res.json({
       message: "¡Registro actualizado correctamente!",
     });
