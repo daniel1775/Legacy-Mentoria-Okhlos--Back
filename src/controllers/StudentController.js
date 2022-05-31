@@ -145,7 +145,7 @@ export const deleteStudent = async (req, res) => {
 		res.json({ message: error.message });
 	}
 };
-
+ 
 export const getStudentInterests = async (req,res) => {
 	try {
 		const student = await db.query(`
