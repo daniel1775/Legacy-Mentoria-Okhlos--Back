@@ -67,7 +67,7 @@ export const updateMentor = async (req, res) => {
 
 		await db.query(`UPDATE users SET users.email = '${data[0][1]}' WHERE users.id = ${id_user[0][0].id_user};`)
 
-		await db.query(`UPDATE mentor SET mentors.name = '${data[0][0]}', mentors.email = '${data[0][1]}', mentors.age = ${data[0][2]}, mentors.sons = ${data[0][3]}, mentors.num_estudiantes = ${data[0][4]}, mentors.phone = ${data[0][5]}, mentors.status = ${data[0][6]}, mentors.gender = '${data[0][7]}', 
+		await db.query(`UPDATE mentors SET mentors.name = '${data[0][0]}', mentors.email = '${data[0][1]}', mentors.age = ${data[0][2]}, mentors.sons = ${data[0][3]}, mentors.num_estudiantes = ${data[0][4]}, mentors.phone = ${data[0][5]}, mentors.status = ${data[0][6]}, mentors.gender = '${data[0][7]}', 
     mentors.id_studies = ${data[0][8]}, mentors.id_bussiness = ${data[0][9]}, mentors.id_cargo = ${data[0][10]}, mentors.id_user = ${id_user[0][0].id_user} WHERE mentors.id = ${req.params.id};`)
 
 		//interes bajo
