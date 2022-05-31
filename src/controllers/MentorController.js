@@ -40,7 +40,7 @@ export const createMentor = async (req, res) => {
 
         await db.query(`INSERT INTO mentors (name,email,age,sons,num_estudiantes,phone,status,gender,id_studies,id_bussiness, id_cargo,id_user) VALUES ('${data[0][0]}','${data[0][1]}',${data[0][2]},${data[0][3]},${data[0][4]},${data[0][5]},${data[0][6]},'${data[0][7]}',(SELECT studies.id FROM studies WHERE studies.title = '${data[0][8]}'),(SELECT Businesses.id FROM Businesses WHERE Businesses.name = '${data[0][9]}'),(SELECT Cargos.id FROM Cargos WHERE Cargos.name = '${data[0][10]}'),(SELECT users.id FROM users WHERE users.email = '${data[0][1]}'));`)
 
-        const id_student = await db.query(`SELECT mentors.id FROM mentors WHERE mentors.email = '${data[0][1]}';`)
+        const id_mentor = await db.query(`SELECT mentors.id FROM mentors WHERE mentors.email = '${data[0][1]}';`)
 
         //interes bajo
         await db.query(`INSERT INTO mentors_interests (mentors_interests.nivel, mentors_interests.id_mentor, mentors_interests.id_interest) VALUES (1,${id_mentor[0][0].id},(SELECT interests.id FROM interests WHERE interests.name = '${data[0][11]}'));`)
