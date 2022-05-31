@@ -4,7 +4,7 @@ import { createAdmin, deleteAdmin, getAdmin, getOneAdmin, updateAdmin } from "..
 import { createBusiness, deleteBusiness, getBusiness, getOneBusiness, updateBusiness } from "../controllers/BusinessController.js";
 import { createInterests, deleteInterests, getInterests, getOneInterests, updateInterests } from "../controllers/InterestsController.js";
 
-import { createMentor, deleteMentor, getMentor, getOneMentor, updateMentor, getAllMentors, mentorStatus, getMentorsAvailable, mentor_assigned } from "../controllers/MentorController.js";
+import { createMentor, deleteMentor, getMentor, getOneMentor, updateMentor, getAllMentors, mentorStatus, getMentorsAvailable, mentor_assigned, getMentorsMatch } from "../controllers/MentorController.js";
 
 import { createPrograms, deletePrograms, getOnePrograms, getPrograms, updatePrograms } from "../controllers/ProgramsController.js";
 import { createSessions, deleteSessions, getOneSessions, getSessions, updateSessions, getAllSessions } from "../controllers/SessionsController.js";
@@ -21,6 +21,7 @@ import { loginP } from "../controllers/PruebaLogin.js";
 
 import { getUserMentor, createUserMentor } from "../controllers/UserMentorsController.js"
 import {massiveDataStudent ,getUserStudent} from '../controllers/testMassive.js'
+import { testinfo } from "../controllers/MatchController.js";
 
 
 const router = express.Router();
@@ -43,7 +44,7 @@ router.post('/admin', createAdmin)  // funciona
 router.put('/admin/:id', updateAdmin) //funciona
 router.delete('/admin/:id', deleteAdmin) //funciona
 
-//revisar 
+
 router.get('/all-mentors', getAllMentors) //funciona
 router.get('/mentors', getMentor) //funciona
 router.get('/mentor/:id', getOneMentor) //funciona
@@ -53,6 +54,9 @@ router.delete('/mentor/:id', deleteMentor) //funciona
 router.put('/mentorStatus/:id', mentorStatus )// funciona
 router.get('/mentors/available', getMentorsAvailable) //funciona
 router.get("/mentorAssigned",mentor_assigned)//funciona
+
+router.get('/testmatch', getMentorsMatch) //funciona
+
 
 router.get('/all-sessions', getAllSessions) //funciona
 router.get('/sessions', getSessions) //funciona
@@ -127,6 +131,8 @@ router.post('/StudentMasiva',massiveDataStudent) //funciona
 
 router.get('/user/mentor',getUserMentor) //funciona
 router.post('/MentorMasiva',createUserMentor)
+
+router.get('/test',testinfo)
 
 
 export default router

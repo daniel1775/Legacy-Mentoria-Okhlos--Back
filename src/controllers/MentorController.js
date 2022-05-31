@@ -20,6 +20,7 @@ export const getOneMentor = async (req, res) => {
       },
     });
     res.json(mentor[0]);
+    return(mentor)
   } catch (error) {
     res.json({
       message: error.message,
@@ -105,9 +106,17 @@ export const mentorStatus = async (req, res) => {
 //Trae todos los mentores que aun tengan cupo para ser mentores de mas estudiantes
 export const getMentorsAvailable = async (req, res) => {
   try {
-    const result = await db.query(`
-			SELECT  id,name FROM mentors m WHERE m.num_estudiantes > (SELECT COUNT(*) FROM matchs ma WHERE m.id = ma.id_mentor)`);
-    res.json(result);
+    const result = await db.query(`SELECT  id, name, age FROM mentors m WHERE m.num_estudiantes > SOME (SELECT COUNT(id_mentor) FROM matchs ma WHERE m.id = ma.id_mentor);`);
+    let mentors = [];
+		for(let i=0 ; i<result[0].length ; i++){
+			let ob = {
+				id: result[0][i].id,
+				name: result[0][i].name,
+				age: result[0][i].age
+			}
+			mentors.push(ob)
+		}
+		return(mentors)
   } catch (error) {
     res.json({
       message: error.message,
@@ -133,4 +142,27 @@ export const mentor_assigned = async (req, res) => {
       message: error.message,
     });
   }
+};
+
+export const getMentorsMatch = async () => {
+
+	try {
+		const result = await db.query(`SELECT mentors.id ,mentors.name, mentors.age, interests.name as interests ,mentors_interests.nivel FROM mentors, mentors_interests, interests WHERE mentors.id = mentors_interests.id_mentor and  interests.id = mentors_interests.id_interest and mentors.num_estudiantes > SOME (SELECT COUNT(matchs.id_mentor) FROM matchs WHERE matchs.id_mentor = mentors.id) ORDER BY mentors.id;`)
+
+		let mentors = [];
+		for(let i=0 ; i<result[0].length ; i++){
+			let ob = {
+				id: result[0][i].id,
+				name: result[0][i].name,
+				age: result[0][i].age,
+				interest: result[0][i].interests,
+        nivel: result[0][i].nivel
+			}
+			mentors.push(ob)
+		}
+    console.log(mentors)
+		return(mentors);
+	} catch (error) {
+		console.log("message:" + error.message)
+	}
 };

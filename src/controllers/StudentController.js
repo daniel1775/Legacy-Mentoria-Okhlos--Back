@@ -59,7 +59,7 @@ export const getMaxCohort = async (req, res) => {
 export const searchStudent = async (req, res) => {
 
 	try {
-		const student = await db.query('SELECT * FROM Estudiantes WHERE name LIKE "%' + req.params.name + '%"'
+		const student = await db.query('SELECT * FROM estudiantes WHERE name LIKE "%' + req.params.name + '%"'
 		)
 		res.json(student[0]);
 	}  catch (error) {
@@ -151,14 +151,14 @@ export const deleteStudent = async (req, res) => {
 export const getStudentInterests = async (req,res) => {
 	try {
 		const student = await db.query(`
-		SELECT Estudiantes.id, Estudiantes.name, Interests.name as Interests, Estudiante_interest.nivel FROM Estudiantes, Interests, Estudiante_interest WHERE Estudiante_interest.id_estudiante = ${req.params.id} and Estudiantes.id = ${req.params.id} and Estudiante_interest.id_interest = Interests.id; 
+		SELECT estudiantes.id, estudiantes.name, interests.name as interests, estudiante_interest.nivel FROM estudiantes, interests, estudiante_interest WHERE estudiante_interest.id_estudiante = ${req.params.id} and estudiantes.id = ${req.params.id} and estudiante_interest.id_interest = interests.id; 
 		`)
 
 		let interestsTest = []
 
 		interestsTest.push({"id" : student[0][0].id})
 		for (let i = 0; i < 2; i++) {
-			interestsTest.push({"interest" : student[0][i].Interests , "level" : student[0][i].nivel});
+			interestsTest.push({"interest" : student[0][i].interests , "level" : student[0][i].nivel});
 		}
 		console.log(interestsTest)
 		res.end()
@@ -203,7 +203,7 @@ export const toggleStatusStudent = async (req, res) => {
 export const student_assigned = async (req, res) => {
 	try {
 		const [result, metadata] = await db.query(`
-		SELECT E.name as nombreEstudiante, m.name NombreMentor  FROM Estudiantes  E
+		SELECT E.name as nombreEstudiante, m.name NombreMentor  FROM estudiantes  E
 			INNER JOIN Matchs ma ON
 				E.id = ma.id_estudiante
 				INNER JOIN mentors m ON
