@@ -55,9 +55,6 @@ router.put('/mentorStatus/:id', mentorStatus )// funciona
 router.get('/mentors/available', getMentorsAvailable) //funciona
 router.get("/mentorAssigned",mentor_assigned)//funciona
 
-router.get('/testmatch', getMentorsMatch) //funciona
-
-
 router.get('/all-sessions', getAllSessions) //funciona
 router.get('/sessions', getSessions) //funciona
 router.get('/sessions/:id', getOneSessions) //funciona

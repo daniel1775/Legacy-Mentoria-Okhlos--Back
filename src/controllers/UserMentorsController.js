@@ -1,14 +1,14 @@
-import db from '../db/db.js';
-import UsersModel from '../models/UsersModel.js';
+import db from "../db/db.js";
 
-export const getUserMentor = async (req,res) => {
-    try {
-        const result = await db.query(`SELECT mentors.id, mentors.name, mentors.email, mentors.age, mentors.phone, studies.title, Businesses.name as company, Cargos.name as cargo FROM mentors, Businesses, studies, Cargos WHERE studies.id = mentors.id_studies and Businesses.id = mentors.id_bussiness and Cargos.id = mentors.id_cargo ORDER BY mentors.name;`)
-        res.json(result[0]);
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-}
+export const getUserMentor = async (req, res) => {
+  try {
+    const result = await db.query(
+      `SELECT mentors.id, mentors.name as nombre, mentors.email, mentors.age, mentors.phone, mentors.status, mentors.gender,cargos.name as cargo, businesses.name as company, studies.title as estudios, mentors.sons, mentors.num_estudiantes FROM mentors, businesses, studies, cargos WHERE studies.id = mentors.id_studies and businesses.id = mentors.id_bussiness and cargos.id = mentors.id_cargo;`);
+    res.json(result);
+  } catch (error) {
+    res.json({ message: error.message });
+  }
+};
 
 export const createUserMentor = async (req,res) => {
     let data = req.body
