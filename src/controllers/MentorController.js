@@ -1,5 +1,6 @@
 import MentorModel from "../models/MentorModel.js";
 import db from "../db/db.js";
+import UsersModel from '../models/UsersModel.js'
 
 export const getAllMentors = async (req, res) => {
   try {
