@@ -17,7 +17,7 @@ import { authController, checkLogin } from "../controllers/LoginController.js";
 //middelwares
 import { isAuth } from "../middelwares/auth.js";
 import { loginP } from "../controllers/PruebaLogin.js";
-import {testMatch} from "../controllers/MatchController.js";
+import {matchMassive, testMatch} from "../controllers/MatchController.js";
 
 
 import { getUserMentor, createUserMentor } from "../controllers/UserMentorsController.js"
@@ -134,6 +134,7 @@ router.post('/MentorMasiva',createUserMentor)
 
 //################## Pruebas macht #########################
 router.get('/prueba/match/:id',testMatch) //funcionaa+
+router.get('/MatchMassive',matchMassive) //funcionaa+
 router.get('/studentInterestLow/:id',getStudentInterestsLow) //funciona
 router.get('/studentInterestHigh/:id',getStudentInterestsHigh) //funciona
 //#########################################

@@ -174,7 +174,7 @@ export const mentor_assigned = async (req, res) => {
 export const getMentorsMatch = async () => {
 
 	try {
-		const result = await db.query(`SELECT mentors.id ,mentors.name, mentors.age, interests.name as interests ,mentors_interests.nivel FROM mentors, mentors_interests, interests WHERE mentors.id = mentors_interests.id_mentor and  interests.id = mentors_interests.id_interest and mentors.num_estudiantes > SOME (SELECT COUNT(matchs.id_mentor) FROM matchs WHERE matchs.id_mentor = mentors.id) ORDER BY mentors.id;`)
+		const result = await db.query(`SELECT mentors.id ,mentors.name, mentors.age, interests.name as interests ,mentors_interests.nivel FROM mentors, mentors_interests, interests WHERE mentors.id = mentors_interests.id_mentor and  interests.id = mentors_interests.id_interest and mentors.num_estudiantes > SOME (SELECT COUNT(matchs.id_mentor) FROM matchs WHERE matchs.id_mentor = mentors.id) and mentors.status = 1 ORDER BY mentors.id;`)
 
 		let mentors = [];
 		for(let i=0 ; i<result[0].length ; i++){
