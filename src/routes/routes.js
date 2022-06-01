@@ -8,7 +8,7 @@ import { createMentor, deleteMentor, getMentor, getOneMentor, updateMentor, getA
 
 import { createPrograms, deletePrograms, getOnePrograms, getPrograms, updatePrograms } from "../controllers/ProgramsController.js";
 import { createSessions, deleteSessions, getOneSessions, getSessions, updateSessions, getAllSessions } from "../controllers/SessionsController.js";
-import { createStudent, deleteStudent, getOneStudent, getStudent, updateStudent, getAllStudents, searchStudent, getMaxCohort, getStudentsAvailable,toggleStatusStudent,student_assigned, getStudentInterests, getCohorte, getStudentsByCohort } from "../controllers/StudentController.js";
+import { createStudent, deleteStudent, getOneStudent, getStudent, updateStudent, getAllStudents, searchStudent, getMaxCohort, getStudentsAvailable,toggleStatusStudent,student_assigned, getStudentInterestsLow, getCohorte, getStudentsByCohort, getStudentInterestsHigh } from "../controllers/StudentController.js";
 import { createStudies, deleteStudies, getOneStudies, getStudies, updateStudies } from "../controllers/StudiesController.js";
 import { createUsers, deleteUsers, getOneUsers, getUsers, register, updateUsers } from "../controllers/UsersController.js";
 import { authController, checkLogin } from "../controllers/LoginController.js";
@@ -81,7 +81,7 @@ router.delete('/student/:id', deleteStudent)//funciona
 router.get('/students/available', getStudentsAvailable)//funciona
 router.get('/students/assigned', student_assigned) //funciona
 
-router.get('/studentInterest/:id',getStudentInterests) //funciona
+
 //######################################################
 
 
@@ -133,7 +133,9 @@ router.get('/user/mentor',getUserMentor) //funciona
 router.post('/MentorMasiva',createUserMentor)
 
 //################## Pruebas macht #########################
-router.get('/prueba/match',test) //funcionaa
+router.get('/prueba/match/:id',test) //funcionaa+
+router.get('/studentInterestLow/:id',getStudentInterestsLow) //funciona
+router.get('/studentInterestHigh/:id',getStudentInterestsHigh) //funciona
 //#########################################
 
 
