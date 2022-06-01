@@ -188,8 +188,8 @@ export const getStudentInterestsLow = async (id) => {
     for (let i = 0; i < 2; i++) {
       if (student[0][i].nivel == 1) {
         interestsTest.push({
-          "id ": student[0][i].id,
-          "interest ": student[0][i].interests,
+          id: student[0][i].id,
+          interest: student[0][i].interests,
         });
       }
     }
@@ -214,7 +214,7 @@ export const getStudentInterestsHigh = async (id) => {
     for (let i = 0; i < 2; i++) {
       if (student[0][i].nivel == 2) {
         interestsTest.push({
-          "id ": student[0][i].id,
+          id: student[0][i].id,
           interest: student[0][i].interests,
         });
       }

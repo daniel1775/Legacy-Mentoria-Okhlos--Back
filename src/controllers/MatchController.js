@@ -1,17 +1,25 @@
-import db from '../db/db.js';
-import { getStudentInterestsLow, getOneStudent, getStudentInterestsHigh, getAgeStudent } from "./StudentController.js"
-import { getMentorsMatch, getOneMentor , getMentorsAvailable } from "./MentorController.js"
+import { getStudentInterestsLow,getStudentInterestsHigh, getAgeStudent } from "./StudentController.js"
+import { getMentorsMatch, getMentorsAvailable } from "./MentorController.js"
 
-
-export const test = async (req, res) => {
+export const testMatch = async (req, res) => {
+  const id_student = req.params.id;
+  const mentorAvailable = await getMentorsAvailable();
   const mentors_interests = await getMentorsMatch();
-  // const student_i_Low = await getStudentInterestsLow(req.params.id)
-  // const student_i_High = await getStudentInterestsHigh(req.params.id)
-  const student_i_age = await getAgeStudent(req.params.id)
-  //console.log(interests_high(mentors_interests, student_i_High));
-  // console.log(interests_high(mentors_interests, "cyberseguridad"));
+  const student_i_Low = await getStudentInterestsLow(id_student)
+  const student_i_High = await getStudentInterestsHigh(id_student)
+  const student_age = await getAgeStudent(id_student)
 
-  console.log(age(mentors_interests, student_i_age));
+  let mentors_total = [];
+  let mentors_age = [];
+  // saved the 2 mentor's interests without add
+  let mentorsInterestUnprocessed = [];
+  mentorsInterestUnprocessed.push(interests_low(mentors_interests,student_i_Low))
+  mentorsInterestUnprocessed.push(interests_high(mentors_interests,student_i_High))
+
+  let mentorsAgeUnprocessed = [];
+  mentorsAgeUnprocessed.push(age(mentors_interests,student_age))
+
+  console.log(mentorsAgeUnprocessed);
   res.end()
 };
 
@@ -51,13 +59,11 @@ function interests_low(mentors, student_interest) {
   let count = 0;
   for (let i = 0; i < mentors.length; i++) {
     if (mentors[i].nivel == 1) {
-      
       if (mentors[i].interest == student_interest[0].interest) {
         count += 10;
       }
-      mentors_score.push({ id_mentor: mentors[i].id, interest_score: count });
+      mentors_score.push({ id_mentor: mentors[i].id, interest_score_low: count });
     }
-
     count = 0;
   }
   return mentors_score;
@@ -73,9 +79,8 @@ function interests_high(mentors, student_interest) {
       if (mentors[i].interest == student_interest[0].interest) {
         count += 10;
       }
-      mentors_score.push({ id_mentor: mentors[i].id, interest_score: count });
+      mentors_score.push({ id_mentor: mentors[i].id, interest_score_high: count });
     }
-
     count = 0;
   }
   return mentors_score;
