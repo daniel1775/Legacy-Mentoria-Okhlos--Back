@@ -19,7 +19,18 @@ export const testMatch = async (req, res) => {
   let mentorsAgeUnprocessed = [];
   mentorsAgeUnprocessed.push(age(mentors_interests,student_age))
 
-  console.log(mentorsAgeUnprocessed);
+  mentorsAgeUnprocessed = mentorsAgeUnprocessed[0]
+
+  for (let i = 0; i < mentorsInterestUnprocessed[0].length; i++) {
+    mentors_total.push({
+      id: mentorsInterestUnprocessed[0][i].id_mentor,
+      total_score: mentorsInterestUnprocessed[0][i].interest_score_low + mentorsInterestUnprocessed[1][i].interest_score_high
+    })
+  }
+
+  console.log(mentorsInterestUnprocessed)
+  console.log(mentors_total)
+
   res.end()
 };
 
