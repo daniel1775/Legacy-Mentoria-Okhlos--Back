@@ -5,7 +5,7 @@ import { getMentorsMatch, getOneMentor , getMentorsAvailable } from "./MentorCon
 
 export const test = async (req, res) => {
   const mentors_interests = await getMentorsMatch();
-  // console.log(interests_low(mentors_interests, "no aplica"));
+   console.log(interests_low(mentors_interests, "no aplica"));
   // console.log(interests_high(mentors_interests, "cyberseguridad"));
   // console.log(age(mentors_interests, 25));
 };
@@ -13,12 +13,12 @@ export const test = async (req, res) => {
 // function age(mentors, student) {
 
 //   for (let i = 0; i < mentors.length; i++) {
-//     const element = array[i];
+//     const score = [];
 //     let age_score = 0;
     
-//       if (element.nivel == 1) {
+//       if (mentors[i].nivel == 1) {
         
-//         let year_mentor = element.age;
+//         let year_mentor = mentors[i].age;
         
 //         if (student == year_mentor) {
 //           age_score = 25;
@@ -27,10 +27,10 @@ export const test = async (req, res) => {
 //         } else if (student >= year_mentor - 10 && student <= year_mentor + 10) {
 //           age_score = 5;
 //         }
-//         return {
+//         score.push({
 //           id_mentor: element.id,
 //           age_score,
-//         }; 
+//         });
 //       }
 //   }
     

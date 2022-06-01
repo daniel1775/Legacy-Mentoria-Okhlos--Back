@@ -17,11 +17,12 @@ import { authController, checkLogin } from "../controllers/LoginController.js";
 //middelwares
 import { isAuth } from "../middelwares/auth.js";
 import { loginP } from "../controllers/PruebaLogin.js";
+import {test} from "../controllers/MatchController.js";
 
 
 import { getUserMentor, createUserMentor } from "../controllers/UserMentorsController.js"
 import {massiveDataStudent ,getUserStudent} from '../controllers/testMassive.js'
-import { testinfo } from "../controllers/MatchController.js";
+
 
 
 const router = express.Router();
@@ -132,7 +133,7 @@ router.get('/user/mentor',getUserMentor) //funciona
 router.post('/MentorMasiva',createUserMentor)
 
 //################## Pruebas macht #########################
-router.get('/prueba/match', test) //funcionaa
+router.get('/prueba/match',test) //funcionaa
 //#########################################
 
 
