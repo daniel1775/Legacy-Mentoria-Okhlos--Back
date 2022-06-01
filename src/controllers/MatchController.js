@@ -1,5 +1,5 @@
 import { getStudentInterestsLow,getStudentInterestsHigh, getAgeStudent } from "./StudentController.js"
-import { getMentorsMatch, getMentorsAvailable } from "./MentorController.js"
+import { getMentorsMatch } from "./MentorController.js"
 import db from "../db/db.js";
 
 export const testMatch = async (req, res) => {
@@ -64,10 +64,10 @@ export const testMatch = async (req, res) => {
 };
 
 export const matchMassive = async (req,res)=>{
-  const mentors_interests = await getMentorsMatch();
   const students = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]
   let data = []
   for (let i = 0; i < students.length; i++) {
+    const mentors_interests = await getMentorsMatch();
     const student_i_Low = await getStudentInterestsLow(students[i])
     const student_i_High = await getStudentInterestsHigh(students[i])
     const student_age = await getAgeStudent(students[i])
@@ -119,21 +119,25 @@ export const matchMassive = async (req,res)=>{
       porcentajeScoreIHigh: porcentajeScoreIHigh,
       porcentajeScoreAge: porcentajeScoreAge
     })    
+
+    let num_students = await db.query(`SELECT mentors.num_estudiantes FROM mentors WHERE mentors.id = ${max_mentor.id};`)
+
+    let num = num_students[0][0].num_estudiantes - 1
+    console.log('num_estudiantes: ' + num)
+
+    await db.query(`UPDATE mentors SET num_estudiantes = ${num} WHERE mentors.id = ${max_mentor.id};`)
+
   }
   res.json(data)
   res.end()
 }
 
-
 //################### interes edad #########################
 function age(mentors, student) {
   const mentors_score = [];
   for (let i = 0; i < mentors.length; i++) {
-    
     let age_score = 0;
-    
       if (mentors[i].nivel == 1) {
-        
         let year_mentor = mentors[i].age;
         let age_student = student[0].age;
         if (age_student == year_mentor) {
@@ -148,10 +152,7 @@ function age(mentors, student) {
           age_score,
         });
       }
-
-
   }
-    
   return mentors_score;
 }
 //##########################################################
