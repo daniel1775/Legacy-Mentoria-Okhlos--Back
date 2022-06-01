@@ -1,19 +1,22 @@
 import db from '../db/db.js';
-import { getStudentInterestsLow, getOneStudent } from "./StudentController.js"
+import { getStudentInterestsLow, getOneStudent, getStudentInterestsHigh, getAgeStudent } from "./StudentController.js"
 import { getMentorsMatch, getOneMentor , getMentorsAvailable } from "./MentorController.js"
 
 
 export const test = async (req, res) => {
   const mentors_interests = await getMentorsMatch();
-  const student_i_Low = await getStudentInterestsLow(req.params.id)
-  console.log(interests_low(mentors_interests, student_i_Low));
+  // const student_i_Low = await getStudentInterestsLow(req.params.id)
+  // const student_i_High = await getStudentInterestsHigh(req.params.id)
+  const student_i_age = await getAgeStudent(req.params.id)
+  //console.log(interests_high(mentors_interests, student_i_High));
   // console.log(interests_high(mentors_interests, "cyberseguridad"));
-  //console.log(age(mentors_interests, 25));
+
+  console.log(age(mentors_interests, student_i_age));
   res.end()
 };
 
 
-//################### interes bajo #########################
+//################### interes edad #########################
 function age(mentors, student) {
   const mentors_score = [];
   for (let i = 0; i < mentors.length; i++) {
@@ -23,12 +26,12 @@ function age(mentors, student) {
       if (mentors[i].nivel == 1) {
         
         let year_mentor = mentors[i].age;
-        
-        if (student == year_mentor) {
+        let age_student = student[0].age;
+        if (age_student == year_mentor) {
           age_score = 25;
-        } else if (student >= year_mentor - 5 && student <= year_mentor + 5) {
+        } else if (age_student >= year_mentor - 5 && age_student <= year_mentor + 5) {
           age_score = 15;
-        } else if (student >= year_mentor - 10 && student <= year_mentor + 10) {
+        } else if (age_student >= year_mentor - 10 && age_student <= year_mentor + 10) {
           age_score = 5;
         }
         mentors_score.push({
@@ -67,7 +70,7 @@ function interests_high(mentors, student_interest) {
   let count = 0;
   for (let i = 0; i < mentors.length; i++) {
     if (mentors[i].nivel == 2) {
-      if (mentors[i].interest == student_interest) {
+      if (mentors[i].interest == student_interest[0].interest) {
         count += 10;
       }
       mentors_score.push({ id_mentor: mentors[i].id, interest_score: count });
