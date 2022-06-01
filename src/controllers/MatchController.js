@@ -28,8 +28,18 @@ export const testMatch = async (req, res) => {
     })
   }
 
+  let max_mentor = mentors_total[0];
+  for (let i = 1; i < mentors_total.length; i++) {
+    if(max_mentor.total_score < mentors_total[i].total_score){
+      max_mentor = mentors_total[i];
+    }
+  }
+
+
+
   console.log(mentorsInterestUnprocessed)
   console.log(mentors_total)
+  console.log(max_mentor.id)
 
   res.end()
 };
