@@ -145,8 +145,37 @@ export const deleteStudent = async (req, res) => {
 		res.json({ message: error.message });
 	}
 };
- 
-export const getStudentInterests = async (req,res) => {
+
+//################ obtener intereses bajos ###################
+export const getStudentInterestsLow = async (id) => {
+	try {
+		const student = await db.query(`
+		SELECT estudiantes.id, estudiantes.name, interests.name as interests, estudiante_interest.nivel FROM estudiantes, interests, estudiante_interest WHERE estudiante_interest.id_estudiante = ${id} and estudiantes.id = ${id} and estudiante_interest.id_interest = interests.id; 
+		`)
+
+		let interestsTest = []
+
+		for (let i = 0; i < 2; i++) {
+			if (student[0][i].nivel == 1) {
+
+				interestsTest.push({
+					"id ":student[0][i].id,
+					"interest" : student[0][i].interests, 
+				});
+			}
+		}
+		console.log(interestsTest)
+		
+		return(interestsTest)
+				
+	} catch (error) {
+		console.log("message:" + error.message)
+	}
+};
+//############################################################
+
+//################ obtener intereses altos ###################
+export const getStudentInterestsHigh = async (req,res) => {
 	try {
 		const student = await db.query(`
 		SELECT estudiantes.id, estudiantes.name, interests.name as interests, estudiante_interest.nivel FROM estudiantes, interests, estudiante_interest WHERE estudiante_interest.id_estudiante = ${req.params.id} and estudiantes.id = ${req.params.id} and estudiante_interest.id_interest = interests.id; 
@@ -154,9 +183,15 @@ export const getStudentInterests = async (req,res) => {
 
 		let interestsTest = []
 
-		interestsTest.push({"id" : student[0][0].id})
 		for (let i = 0; i < 2; i++) {
-			interestsTest.push({"interest" : student[0][i].interests , "level" : student[0][i].nivel});
+			if (student[0][i].nivel == 2) {
+
+				interestsTest.push({
+					"id ":student[0][i].id,
+					"interest" : student[0][i].interests, 
+				});
+			}
+			
 		}
 		console.log(interestsTest)
 		res.end()
@@ -166,6 +201,7 @@ export const getStudentInterests = async (req,res) => {
 		console.log("message:" + error.message)
 	}
 };
+//############################################################
 
 //Este controlador sirve para obtener las cohortes ordenadas
 export const getCohorte = async (req,res) => {

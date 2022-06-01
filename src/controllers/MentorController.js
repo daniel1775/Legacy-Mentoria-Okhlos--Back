@@ -187,7 +187,7 @@ export const getMentorsMatch = async () => {
 			}
 			mentors.push(ob)
 		}
-    console.log(mentors)
+    // console.log(mentors)
 		return(mentors);
 	} catch (error) {
 		console.log("message:" + error.message)
