@@ -2,7 +2,7 @@ import { getStudentInterestsLow,getStudentInterestsHigh, getAgeStudent } from ".
 import { getMentorsMatch } from "./MentorController.js"
 import db from "../db/db.js";
 
-export const testMatch = async (req, res) => {
+export const matchIndividual = async (req, res) => {
   const id_student = req.params.id;
   const mentors_interests = await getMentorsMatch();
   const student_i_Low = await getStudentInterestsLow(id_student)
@@ -50,11 +50,11 @@ export const testMatch = async (req, res) => {
     let mentorsName = await db.query(`SELECT mentors.name FROM mentors WHERE mentors.id = ${max_mentor.id};`)
 
     data.push({
-      mentorId: max_mentor.id,
-      mentorScore: (max_mentor.total_score/60)*100,
       idStudent: id_student,
       nameStudent: studenName[0][0].name,
+      mentorId: max_mentor.id,
       nameMentor: mentorsName[0][0].name,
+      mentorScore: (max_mentor.total_score/60)*100,
       porcentajeScoreIlow: porcentajeScoreIlow,
       porcentajeScoreIHigh: porcentajeScoreIHigh,
       porcentajeScoreAge: porcentajeScoreAge
@@ -114,19 +114,15 @@ export const matchMassive = async (req,res)=>{
       let mentorsName = await db.query(`SELECT mentors.name FROM mentors WHERE mentors.id = ${max_mentor.id};`)
 
       data.push({
-        mentorId: max_mentor.id,
-        mentorScore: (max_mentor.total_score/60)*100,
         idStudent: students[i],
         nameStudent: studenName[0][0].name,
+        mentorId: max_mentor.id,
         nameMentor: mentorsName[0][0].name,
+        mentorScore: (max_mentor.total_score/60)*100,
         porcentajeScoreIlow: porcentajeScoreIlow,
         porcentajeScoreIHigh: porcentajeScoreIHigh,
         porcentajeScoreAge: porcentajeScoreAge
       })    
-
-      let num_students = await db.query(`SELECT mentors.num_estudiantes FROM mentors WHERE mentors.id = ${max_mentor.id};`)
-
-      let num = num_students[0][0].num_estudiantes - 1
 
       await db.query(`INSERT INTO matchs (score,cohort,id_mentor,id_estudiante, id_program) VALUES (${max_mentor.total_score},(SELECT estudiantes.cohort FROM estudiantes WHERE estudiantes.id = ${students[i]}),${max_mentor.id},${students[i]},(SELECT estudiantes.id_program FROM estudiantes where estudiantes.id = ${students[i]}));`)
     }else{
@@ -195,3 +191,46 @@ function interests_high(mentors, student_interest) {
   return mentors_score;
 }
 //##########################################################
+
+
+export const getAllMatchByCohort = async (req,res)=>{
+
+  try {
+    const match = await db.query(`SELECT matchs.id, (SELECT mentors.name FROM mentors WHERE mentors.id = matchs.id_mentor) as nombre_mentor, (SELECT estudiantes.name FROM estudiantes WHERE estudiantes.id = matchs.id_estudiante) as nombre_estudiante, matchs.cohort, matchs.id_program, ((matchs.score/60)*100) as match_score FROM matchs WHERE cohort = ${req.param.cohort}`);
+    res.json(match[0]);
+  } catch (error) {
+    res.json({
+      message: error.message,
+    });
+  }
+}
+
+export const getMatchById = async (req,res)=>{
+  try {
+    let studentInMatch = await db.query(`SELECT matchs.id_estudiante FROM matchs WHERE matchs.id_estudiante = ${req.params.id};`)
+
+    if (studentInMatch[0].length != 0) {
+      let matchStudent = await db.query(`SELECT matchs.id, (SELECT mentors.name FROM mentors WHERE mentors.id = matchs.id_mentor) as nombre_mentor, (SELECT estudiantes.name FROM estudiantes WHERE estudiantes.id = matchs.id_estudiante) as nombre_estudiante, matchs.cohort, matchs.id_program, ((matchs.score/60)*100) as match_score FROM matchs WHERE matchs.id_estudiante = ${req.params.id};`)
+      res.json(matchStudent[0]);
+    } else {
+      res.json({
+        message: `¡El estudiante con el id: ${req.params.id} no tiene mentor asignado!`,
+      });
+    }
+  } catch (error) {
+    res.json({
+      message: error.message,
+    });
+  }
+}
+
+export const createMatch = async (req, res)=>{
+  try{
+    await db.query(`INSERT INTO matchs (score, cohort, id_mentor, id_estudiante, id_program) VALUES(${req.body.score}, ${req.body.cohort}, ${req.body.id_mentor}, ${req.body.id_estudiante}, ${req.body.program});`);
+    res.json({
+      message: "¡Match creado correctamente!",
+    });
+  }catch(error){
+    res.json({ message: error.message });
+  }
+}

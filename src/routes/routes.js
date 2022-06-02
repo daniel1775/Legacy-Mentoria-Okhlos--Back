@@ -17,7 +17,7 @@ import { authController, checkLogin } from "../controllers/LoginController.js";
 //middelwares
 import { isAuth } from "../middelwares/auth.js";
 import { loginP } from "../controllers/PruebaLogin.js";
-import {matchMassive, testMatch} from "../controllers/MatchController.js";
+import {matchMassive, matchIndividual,getMatchById, getAllMatchByCohort} from "../controllers/MatchController.js";
 
 
 import { getUserMentor, createUserMentor } from "../controllers/UserMentorsController.js"
@@ -133,12 +133,12 @@ router.get('/user/mentor',getUserMentor) //funciona
 router.post('/MentorMasiva',createUserMentor)
 
 //################## Pruebas macht #########################
-router.get('/prueba/match/:id',testMatch) //funcionaa+
+router.get('/calculate/match/:id',matchIndividual) //funcionaa+
 router.post('/MatchMassive',matchMassive) //funcionaa+
 router.get('/studentInterestLow/:id',getStudentInterestsLow) //funciona
 router.get('/studentInterestHigh/:id',getStudentInterestsHigh) //funciona
+router.get('/getAllMatchByCohort/:cohort',getAllMatchByCohort) //funcionaa+
+router.get('/getMatchById/:id',getMatchById) //funcionaa+
 //#########################################
-
-
 
 export default router
