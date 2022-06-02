@@ -1,6 +1,9 @@
 {
   "name": "api",
   "version": "1.0.0",
+  "engines": {
+    "node": ">=6"
+  },
   "description": "",
   "main": "index.js",
   "type": "module",
@@ -22,4 +25,5 @@
     "nodemon": "^2.0.16",
     "sequelize": "^6.17.0"
   }
+  
 }
