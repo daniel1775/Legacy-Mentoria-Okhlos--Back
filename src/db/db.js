@@ -8,6 +8,7 @@ import { Sequelize } from "sequelize";
         dialect: 'mysql',
         //port: process.env.port || 3307
         //
+        //
         
 })
 
