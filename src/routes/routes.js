@@ -134,7 +134,7 @@ router.post('/MentorMasiva',createUserMentor)
 
 //################## Pruebas macht #########################
 router.get('/prueba/match/:id',testMatch) //funcionaa+
-router.get('/MatchMassive',matchMassive) //funcionaa+
+router.post('/MatchMassive',matchMassive) //funcionaa+
 router.get('/studentInterestLow/:id',getStudentInterestsLow) //funciona
 router.get('/studentInterestHigh/:id',getStudentInterestsHigh) //funciona
 //#########################################
