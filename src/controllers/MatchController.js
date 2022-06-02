@@ -120,12 +120,12 @@ export const matchMassive = async (req,res)=>{
       porcentajeScoreAge: porcentajeScoreAge
     })    
 
-    let num_students = await db.query(`SELECT mentors.num_estudiantes FROM mentors WHERE mentors.id = ${max_mentor.id};`)
+    // let num_students = await db.query(`SELECT mentors.num_estudiantes FROM mentors WHERE mentors.id = ${max_mentor.id};`)
 
-    let num = num_students[0][0].num_estudiantes - 1
-    console.log('num_estudiantes: ' + num)
+    // let num = num_students[0][0].num_estudiantes - 1
+    // console.log('num_estudiantes: ' + num)
 
-    await db.query(`UPDATE mentors SET num_estudiantes = ${num} WHERE mentors.id = ${max_mentor.id};`)
+    // await db.query(`UPDATE mentors SET num_estudiantes = ${num} WHERE mentors.id = ${max_mentor.id};`)
 
   }
   res.json(data)
