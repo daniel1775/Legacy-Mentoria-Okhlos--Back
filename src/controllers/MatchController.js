@@ -333,3 +333,18 @@ export const deletOneMatch = async (req,res) =>{
     });
   }
 }
+
+export const updatedMatch = async (req, res)=>{
+  let data = req.body
+  try{
+    await db.query(`UPDATE matchs SET score = ${data[0]}, cohort = ${data[1]}, id_mentor = ${data[2]}, id_estudiante = ${data[3]}, id_program = (SELECT id_program FROM estudiantes WHERE estudiantes.id = ${data[3]}) WHERE id = ${req.params.id};`);
+    res.json({
+      message: "¡Match actualizado correctamente!",
+    });
+  }catch(error){
+    res.json({ message: error.message });
+  }
+}
+
+
+

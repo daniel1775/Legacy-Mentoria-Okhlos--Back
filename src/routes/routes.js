@@ -17,7 +17,7 @@ import { authController, checkLogin } from "../controllers/LoginController.js";
 //middelwares
 import { isAuth } from "../middelwares/auth.js";
 import { loginP } from "../controllers/PruebaLogin.js";
-import {matchMassive, matchIndividual,getMatchById, getAllMatchByCohort, createMatch, resetMatch, deletOneMatch} from "../controllers/MatchController.js";
+import {matchMassive, matchIndividual,getMatchById, getAllMatchByCohort, createMatch, resetMatch, deletOneMatch, updatedMatch} from "../controllers/MatchController.js";
 
 
 import { getUserMentor, createUserMentor } from "../controllers/UserMentorsController.js"
@@ -135,6 +135,7 @@ router.get('/getMatchById/:id',getMatchById) //funcionaa+
 router.post('/createMatch',createMatch)
 router.delete('/resetMatch',resetMatch)
 router.delete('/deleteMatch/:id',deletOneMatch)
+router.put('/updatedMatch/:id',updatedMatch)
 
 //#########################################
 

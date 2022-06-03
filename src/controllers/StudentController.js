@@ -257,8 +257,7 @@ export const getStudentsByCohort = async (req, res) => {
 export const getStudentsAvailable = async (req, res) => {
   try {
     const result =
-      await db.query(`SELECT estudiantes.id, estudiantes.name, estudiantes.age FROM 
-		estudiantes,matchs WHERE estudiantes.id <> matchs.id_estudiante;`);
+      await db.query(`SELECT estudiantes.id as id_student, estudiantes.name FROM estudiantes WHERE estudiantes.id not in (SELECT id_estudiante FROM matchs WHERE matchs.id_estudiante = estudiantes.id) ORDER BY estudiantes.id;`);
     res.json(result[0]);
   } catch (error) {
     res.json({ message: error.message });

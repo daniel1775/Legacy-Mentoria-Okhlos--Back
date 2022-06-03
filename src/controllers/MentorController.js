@@ -134,16 +134,7 @@ export const mentorStatus = async (req, res) => {
 export const getMentorsAvailable = async (req, res) => {
   try {
     const result = await db.query(`SELECT  id, name, age FROM mentors m WHERE m.num_estudiantes > SOME (SELECT COUNT(id_mentor) FROM matchs ma WHERE m.id = ma.id_mentor);`);
-    let mentors = [];
-		for(let i=0 ; i<result[0].length ; i++){
-			let ob = {
-				id: result[0][i].id,
-				name: result[0][i].name,
-				age: result[0][i].age
-			}
-			mentors.push(ob)
-		}
-		return(mentors)
+    res.json(result[0])
   } catch (error) {
     res.json({
       message: error.message,
