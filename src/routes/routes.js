@@ -17,7 +17,7 @@ import { authController, checkLogin } from "../controllers/LoginController.js";
 //middelwares
 import { isAuth } from "../middelwares/auth.js";
 import { loginP } from "../controllers/PruebaLogin.js";
-import {matchMassive, matchIndividual,getMatchById, getAllMatchByCohort} from "../controllers/MatchController.js";
+import {matchMassive, matchIndividual,getMatchById, getAllMatchByCohort, createMatch, resetMatch, deletOneMatch} from "../controllers/MatchController.js";
 
 
 import { getUserMentor, createUserMentor } from "../controllers/UserMentorsController.js"
@@ -31,13 +31,6 @@ const router = express.Router();
 router.get('/login/:email/:password', checkLogin)
 //########## Login con JWT y datos por el body ###########
 router.post('/login2', loginP)
-
-// router.get('/match/calculate/:id_student', calculateMatch)
-// router.get('/match/:cohort/:program', getMatchCohort)
-// router.get('/matchs', getMatch)
-// router.put('/match/update/:id_student/:id_mentor', updateMatch)
-// router.put('/match/confirm', updateMatchAutomatic)
-// router.post('/match/create', createMatch)
 
 router.get('/admin', getAdmin) //funciona
 router.get('/admin/:id', getOneAdmin) //funciona
@@ -132,13 +125,17 @@ router.post('/StudentMasiva',massiveDataStudent) //funciona
 router.get('/user/mentor',getUserMentor) //funciona
 router.post('/MentorMasiva',createUserMentor)
 
-//################## Pruebas macht #########################
-router.get('/calculate/match/:id',matchIndividual) //funcionaa+
+//################## Pruebas match #########################
+router.post('/calculate/match/:id',matchIndividual) //funcionaa+
 router.post('/MatchMassive',matchMassive) //funcionaa+
 router.get('/studentInterestLow/:id',getStudentInterestsLow) //funciona
 router.get('/studentInterestHigh/:id',getStudentInterestsHigh) //funciona
 router.get('/getAllMatchByCohort/:cohort',getAllMatchByCohort) //funcionaa+
 router.get('/getMatchById/:id',getMatchById) //funcionaa+
+router.post('/createMatch',createMatch)
+router.delete('/resetMatch',resetMatch)
+router.delete('/deleteMatch/:id',deletOneMatch)
+
 //#########################################
 
 export default router
