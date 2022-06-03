@@ -7,7 +7,7 @@ import { Sequelize } from "sequelize";
         host: process.env.DB_HOST || 'localhost',
         dialect: 'mysql',
         //port: process.env.port || 3307
-        /////
+        //////
 })
 
 
