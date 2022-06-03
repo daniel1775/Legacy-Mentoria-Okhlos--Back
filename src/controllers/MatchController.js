@@ -243,7 +243,7 @@ function interests_high(mentors, student_interest) {
 export const getAllMatchByCohort = async (req,res)=>{
 
   try {
-    const match = await db.query(`SELECT matchs.id,(SELECT estudiantes.name FROM estudiantes WHERE estudiantes.id = matchs.id_estudiante) as nombre_estudiante,(SELECT mentors.name FROM mentors WHERE mentors.id = matchs.id_mentor) as nombre_mentor,((matchs.score/60)*100) as match_score FROM matchs;`);
+    const match = await db.query(`SELECT matchs.id,(SELECT estudiantes.name FROM estudiantes WHERE estudiantes.id = matchs.id_estudiante) as nombre_estudiante,matchs.id_estudiante,(SELECT mentors.name FROM mentors WHERE mentors.id = matchs.id_mentor) as nombre_mentor,((matchs.score/60)*100) as match_score FROM matchs;`);
     res.json(match[0]);
   } catch (error) {
     res.json({
@@ -333,7 +333,7 @@ export const deletOneMatch = async (req,res) =>{
 export const updatedMatch = async (req, res)=>{
   let data = req.body
   try{
-    await db.query(`UPDATE matchs SET score = ${data[0]}, cohort = ${data[1]}, id_mentor = ${data[2]}, id_estudiante = ${data[3]}, id_program = (SELECT id_program FROM estudiantes WHERE estudiantes.id = ${data[3]}) WHERE id = ${req.params.id};`);
+    await db.query(`UPDATE matchs SET score = 0, cohort = (SELECT cohort FROM estudiantes WHERE estudiantes.id = ${data[1]}) , id_mentor = ${data[0]}, id_estudiante = ${data[1]}, id_program = (SELECT id_program FROM estudiantes WHERE estudiantes.id = ${data[1]}) WHERE id = ${req.params.id};`);
     res.json({
       message: "¡Match actualizado correctamente!",
     });
