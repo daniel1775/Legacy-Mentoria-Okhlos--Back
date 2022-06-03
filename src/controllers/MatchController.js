@@ -243,7 +243,7 @@ function interests_high(mentors, student_interest) {
 export const getAllMatchByCohort = async (req,res)=>{
 
   try {
-    const match = await db.query(`SELECT matchs.id, (SELECT mentors.name FROM mentors WHERE mentors.id = matchs.id_mentor) as nombre_mentor, (SELECT estudiantes.name FROM estudiantes WHERE estudiantes.id = matchs.id_estudiante) as nombre_estudiante, ((matchs.score/60)*100) as match_score FROM matchs;`);
+    const match = await db.query(`SELECT matchs.id,(SELECT estudiantes.name FROM estudiantes WHERE estudiantes.id = matchs.id_estudiante) as nombre_estudiante,(SELECT mentors.name FROM mentors WHERE mentors.id = matchs.id_mentor) as nombre_mentor,((matchs.score/60)*100) as match_score FROM matchs;`);
     res.json(match[0]);
   } catch (error) {
     res.json({
