@@ -3,7 +3,7 @@ import UsersModel from '../models/UsersModel.js';
 
 export const getUserStudent = async (req,res) => {
     try {
-        const result = await db.query(`SELECT estudiantes.id,estudiantes.name,users.email, estudiantes.cohort, estudiantes.age, estudiantes.phone, estudiantes.status, estudiantes.gender, programs.name as programa FROM estudiantes, users, programs WHERE estudiantes.id_user = users.id and estudiantes.id_program = programs.id ORDER BY estudiantes.name;`)
+        const result = await db.query(`SELECT estudiantes.id,estudiantes.name,users.email, estudiantes.cohort, estudiantes.age, estudiantes.phone, estudiantes.status, estudiantes.gender, programs.name as programa, (SELECT interests.name as InteresMenor FROM interests, estudiante_interest, estudiantes as student WHERE interests.id = estudiante_interest.id_interest and estudiante_interest.id_estudiante = student.id and estudiante_interest.nivel = 1 and student.id = estudiantes.id) as InteresMenor, (SELECT interests.name as InteresMayor FROM interests, estudiante_interest, estudiantes as student WHERE interests.id = estudiante_interest.id_interest and estudiante_interest.id_estudiante = estudiantes.id and estudiante_interest.nivel = 2 and student.id = estudiantes.id) as InteresMayor FROM estudiantes, users, programs WHERE estudiantes.id_user = users.id and estudiantes.id_program = programs.id ORDER BY estudiantes.name;`)
         res.json(result[0]);
     } catch (error) {
         res.json({ message: error.message });
