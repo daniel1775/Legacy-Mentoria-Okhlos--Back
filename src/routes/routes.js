@@ -130,7 +130,7 @@ router.post('/calculate/match/:id',matchIndividual) //funcionaa+
 router.post('/MatchMassive',matchMassive) //funcionaa+
 router.get('/studentInterestLow/:id',getStudentInterestsLow) //funciona
 router.get('/studentInterestHigh/:id',getStudentInterestsHigh) //funciona
-router.get('/getAllMatchByCohort/:cohort',getAllMatchByCohort) //funcionaa+
+router.get('/getAllMatch',getAllMatchByCohort) //funcionaa+
 router.get('/getMatchById/:id',getMatchById) //funcionaa+
 router.post('/createMatch',createMatch)
 router.delete('/resetMatch',resetMatch)
