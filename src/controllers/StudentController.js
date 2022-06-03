@@ -286,14 +286,8 @@ export const toggleStatusStudent = async (req, res) => {
 // nombre y id de los mentores  con sus respectivos estudiantes asignados
 export const student_assigned = async (req, res) => {
   try {
-    const [result, metadata] = await db.query(`
-		SELECT E.name as nombreEstudiante, m.name NombreMentor  FROM estudiantes  E
-			INNER JOIN Matchs ma ON
-				E.id = ma.id_estudiante
-				INNER JOIN mentors m ON
-				m.id = ma.id_mentor;
-		`);
-    res.json(result);
+    const result = await db.query(`SELECT COUNT(estudiantes.id) as count FROM estudiantes INNER JOIN matchs ON estudiantes.id = matchs.id_estudiante;`);
+    res.json(result[0][0].count);
   } catch (error) {
     res.json({ message: error.message });
   }
