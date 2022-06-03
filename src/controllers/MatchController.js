@@ -319,11 +319,7 @@ export const resetMatch = async (req, res)=>{
 
 export const deletOneMatch = async (req,res) =>{
   try {
-    await MentorModel.destroy({
-      where: {
-        id: req.params.id,
-      },
-    });
+    await db.query(`DELETE * FROM matchs WHERE matchs.id = ${req.params.id};`)
     res.json({
       message: "¡Match eliminado correctamente!",
     });
