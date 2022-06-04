@@ -120,6 +120,12 @@ export const mentorStatus = async (req, res) => {
   try {
     await db.query(`UPDATE mentors SET mentors.status =NOT(mentors.status) WHERE mentors.id = ${req.params.id};`);
 
+    let mentorInMatch = await db.query(`SELECT matchs.id_mentor FROM matchs WHERE matchs.id_mentor = ${req.params.id};`)
+
+    if (mentorInMatch[0].length != 0) {
+      await db.query(`DELETE FROM matchs WHERE matchs.id_mentor = ${req.params.id};`);
+    }
+
     res.json({
       message: "¡status actualizado correctamente!",
     });
