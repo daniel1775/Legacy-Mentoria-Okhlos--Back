@@ -95,6 +95,8 @@ export const matchMassive = async (req,res)=>{
   let data = []
   for (let i = 0; i < students.length; i++) {
 
+    let studenName = await db.query(`SELECT estudiantes.name FROM estudiantes WHERE estudiantes.id = ${students[i]};`)
+
     let studentInMatch = await db.query(`SELECT matchs.id_estudiante FROM matchs WHERE matchs.id_estudiante = ${students[i]};`)
 
     let studentProgram = await db.query(`SELECT estudiantes.id_program FROM estudiantes WHERE estudiantes.id = ${students[i]};`)
@@ -141,9 +143,7 @@ export const matchMassive = async (req,res)=>{
               break 
             }
           }
-  
-          let studenName = await db.query(`SELECT estudiantes.name FROM estudiantes WHERE estudiantes.id = ${students[i]};`)
-  
+    
           let mentorsName = await db.query(`SELECT mentors.name FROM mentors WHERE mentors.id = ${max_mentor.id};`)
   
           data.push({
@@ -161,8 +161,8 @@ export const matchMassive = async (req,res)=>{
   
         }else{
           data.push({
-            idStudent: null,
-            nameStudent: null,
+            idStudent: students[i],
+            nameStudent: studenName[0][0].name,
             mentorId: null,
             nameMentor: null,
             mentorScore: null,
