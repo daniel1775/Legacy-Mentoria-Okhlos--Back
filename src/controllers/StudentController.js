@@ -267,8 +267,13 @@ export const getStudentsAvailable = async (req, res) => {
 // togglear status estudiante
 export const toggleStatusStudent = async (req, res) => {
   try {
-    await db.query(`UPDATE estudiantes SET estudiantes.status =NOT(estudiantes.status) 
-		WHERE estudiantes.id = ${req.params.id};`);
+    await db.query(`UPDATE estudiantes SET estudiantes.status =NOT(estudiantes.status) WHERE estudiantes.id = ${req.params.id};`);
+
+    let studentInMatch = await db.query(`SELECT matchs.id_estudiante FROM matchs WHERE matchs.id_estudiante = ${req.params.id};`)
+
+    if (studentInMatch[0].length != 0) {
+      await db.query(`DELETE FROM matchs WHERE matchs.id_estudiante = ${req.params.id};`);
+    }
 
     res.json({
       message: "¡status actualizado correctamente!",
