@@ -104,7 +104,7 @@ export const matchMassive = async (req,res)=>{
     let studentProgram = await db.query(`SELECT estudiantes.id_program FROM estudiantes WHERE estudiantes.id = ${students[i]};`)
 
     if (studentProgram[0][0].id_program == 1) {
-      if (studentInMatch[0].length != 0 && studentStatus[0][0].status == false) { //ya existe
+      if (studentInMatch[0].length != 0 || studentStatus[0][0].status == false) { //ya existe
         continue 
       } else {
         const mentors_interests = await getMentorsMatch();
